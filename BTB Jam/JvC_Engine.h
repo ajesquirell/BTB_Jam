@@ -55,7 +55,7 @@ private:
 		MODE_SHOP
 	};
 
-	int nGameMode = MODE_LOCAL_MAP;
+	int nGameMode = MODE_TITLE;
 
 	/*==============INVENTORY===============*/
 	int8_t nInvSelectX = 0; //NEEDS to be signed (so it can go to -1 in the inventory update fcn)
@@ -73,6 +73,11 @@ private:
 	olc::Pixel rectColor;
 
 	float fInvStateTick; //For inventory background fading
+	/*======================================*/
+
+	/*=============TITLE====================*/
+	int nSequenceCnt = 0;
+	float fTitleStateTick = 3.0f;
 	/*======================================*/
 
 	olc::Sprite* backBuff; //Save state of current frame for background of transparent inventory screen
@@ -106,13 +111,11 @@ private:
 
 
 public:
-	bool HandlePickup(wchar_t c); //Function for handling the different pickups without jumbling up the game loop with code for every single pickup
-
 	bool OnUserCreate() override;
 	bool OnUserDestroy();
 	bool OnUserUpdate(float fElapsedTime) override;
 
-	//bool UpdateTitleScreen(float fElapsedTime);
+	bool UpdateTitleScreen(float fElapsedTime);
 	bool UpdateLocalMap(float fElapsedTime);
 	//bool UpdateWorldMap(float fElapsedTime);
 	bool UpdateInventory(float fElapsedTime);

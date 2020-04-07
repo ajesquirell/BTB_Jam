@@ -97,9 +97,6 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 			if (fabs(vx) == 0.0f)
 			{
 				animations.ChangeState("idle");
-
-				if (fabs(vx) > 0.01f) //LITERALLY all this does is allow him to "dance" by trying to move when up against a wall, probably shouldn't have this here but I think it's funny
-					animations.ChangeState("run");
 			}
 			else if (fFaceDir == RIGHT && vx < 0 || fFaceDir == LEFT && vx > 0) //Just changed direction but still moving the opposite way -> braking
 			{

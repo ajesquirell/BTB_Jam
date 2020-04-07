@@ -142,14 +142,15 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Dynamic_Base.cpp" />
     <ClCompile Include="Dynamic_Creature.cpp" />
-    <ClCompile Include="Dynamic_Creature_Covid_S.cpp" />
+    <ClCompile Include="Dynamic_Creature_Covid_Medium.cpp" />
+    <ClCompile Include="Dynamic_Creature_Covid_Small.cpp" />
     <ClCompile Include="Dynamic_Creature_Jerry.cpp" />
     <ClCompile Include="Dynamic_Item.cpp" />
     <ClCompile Include="Dynamic_Projectile.cpp" />
     <ClCompile Include="Dynamic_Teleport.cpp" />
     <ClCompile Include="Game_Utilities.cpp" />
     <ClCompile Include="Items.cpp" />
-    <ClCompile Include="Jerry_Engine.cpp" />
+    <ClCompile Include="JvC_Engine.cpp" />
     <ClCompile Include="Maps.cpp" />
     <ClCompile Include="olcPixelGameEngine.cpp" />
     <ClCompile Include="Quests.cpp" />
@@ -162,7 +163,7 @@
     <ClInclude Include="Dynamics.h" />
     <ClInclude Include="Game_Utilities.h" />
     <ClInclude Include="Items.h" />
-    <ClInclude Include="Jerry_Engine.h" />
+    <ClInclude Include="JvC_Engine.h" />
     <ClInclude Include="Maps.h" />
     <ClInclude Include="olcPGEX_Graphics2D.h" />
     <ClInclude Include="olcPGEX_Sound.h" />

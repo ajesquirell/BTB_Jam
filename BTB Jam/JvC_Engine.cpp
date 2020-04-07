@@ -1,32 +1,10 @@
-﻿#include "Jerry_Engine.h"
+﻿#include "JvC_Engine.h"
 
 #define CMD(n) m_script.AddCommand(new cCommand_ ## n)
 
 Platformer::Platformer()
 {
 	sAppName = "BTB Jam";
-}
-
-
-bool Platformer::HandlePickup(wchar_t c) //Function for handling the different pickups without jumbling up the game loop with code for every single pickup
-{
-	bool success = false; //In case we add a pickup and don't implement it here, it will return false.
-	switch (c)			//Oh and this will be the logic to check for pickups, if it's not meant to be picked up and not implemented here, nothing will happen
-	{					//That way we don't need to have a long if statement in OnUserUpdate() cluttered with every possible pickup we add to the game
-	case (COIN):
-		m_pPlayer->nScore += 10;
-		olc::SOUND::PlaySample(Assets::get().GetSound("sndSampleB")); // Plays Sample B
-		success = true;
-		break;
-
-	case (TEST):
-		//skyColor = olc::DARK_YELLOW;
-		olc::SOUND::PlaySample(Assets::get().GetSound("sndWuWuWu"));
-		success = true;
-		break;
-	}
-
-	return success;
 }
 
 bool Platformer::OnUserCreate()
@@ -58,32 +36,11 @@ bool Platformer::OnUserCreate()
 
 	//Animated
 
-		//Money
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_00"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_01"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_02"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_03"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_04"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_05"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_06"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_07"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_08"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_09"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_10"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_11"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_12"));
-	animMoney.mapStates["normal"].push_back(Assets::get().GetSprite("Money_13"));
-
-	//Set initial animated states
-	animMoney.ChangeState("normal");
-
 	SetPixelMode(olc::Pixel::MASK); //Allow Transparency
 
 
 	//Sound
 	olc::SOUND::InitialiseAudio(44100, 1, 8, 512);
-
-	
 
 	olc::SOUND::PlaySample(Assets::get().GetSound("LitLoop"), true); // Plays Sample C loop
 
@@ -95,7 +52,7 @@ bool Platformer::OnUserCreate()
 	GiveItem(m_pPlayer->pEquipedWeapon);
 
 	//Initial Map
-	ChangeMap("Level 1", 1, Assets::get().GetMap("Level 1")->nHeight - 2);
+	ChangeMap("Covid Tower", 1, Assets::get().GetMap("Covid Tower")->nHeight - 2);
 	fCameraPosY = pCurrentMap->nHeight;
 
 	return true;
@@ -115,7 +72,7 @@ bool Platformer::OnUserUpdate(float fElapsedTime)
 		if (!bGamePaused) {
 			bGamePaused = true; /*Pause*/
 			olc::SOUND::StopSample(Assets::get().GetSound("LitLoop"));
-			olc::SOUND::PlaySample(Assets::get().GetSound("sndGetMoney"));
+			//olc::SOUND::PlaySample(Assets::get().GetSound("sndGetMoney"));
 		}
 		else {
 			bGamePaused = false; /*Unpause*/
@@ -131,8 +88,8 @@ bool Platformer::OnUserUpdate(float fElapsedTime)
 	//Check Game Mode
 	switch (nGameMode)
 	{
-	//case MODE_TITLE:
-		//return UpdateTitleScreen(fElapsedTime);
+	case MODE_TITLE:
+		return UpdateTitleScreen(fElapsedTime);
 	case MODE_LOCAL_MAP:
 		return UpdateLocalMap(fElapsedTime);
 	//case MODE_WORLD_MAP:
@@ -146,6 +103,79 @@ bool Platformer::OnUserUpdate(float fElapsedTime)
 	return true;
 }
 
+bool Platformer::UpdateTitleScreen(float fElapsedTime)
+{
+	FillRect(0, 0, ScreenWidth(), ScreenHeight(), olc::BLACK);
+
+	//Update script
+	m_script.ProcessCommands(fElapsedTime);
+
+	
+
+	fTitleStateTick -= fElapsedTime;
+	if (fTitleStateTick <= 0.0f)
+	{
+			nSequenceCnt++; // Increase sequence number
+
+		// Sequence number has already been incremented, so this adds time to the new current sequence
+		if (nSequenceCnt == 1)
+		{
+			fTitleStateTick = 1.0f;
+		}
+		if (nSequenceCnt == 2)
+		{
+			fTitleStateTick = 2.0f;
+		}
+		if (nSequenceCnt == 3)
+		{
+			CMD(ShowDialog({ "Hello World!", "Covid-19 is worse than we ever imagined" }));
+		}
+		if (nSequenceCnt == 4)
+		{
+			//m_script.CompleteCommand();
+			CMD(ShowDialog({ "We are all going to die!"}));
+			CMD(ShowDialog({ "Unless you can stop covid", "Blah Blah Blah" }));
+			fTitleStateTick = 3.0f;
+		}
+	}
+
+	if (nSequenceCnt == 0 || nSequenceCnt == 2) // This executes while the time is running out
+	{
+		for (int x = 0; x < ScreenWidth(); x++)
+			for (int y = 0; y < ScreenHeight(); y++)
+				Draw(x, y, olc::Pixel(rand() % 255, rand() % 255, rand() % 255));
+	}
+	if (nSequenceCnt >= 3)
+	{
+		DisplayDialog({ "Press X to continue" }, 20, 70);
+	}
+
+
+
+	// Draw any dialog being displayed
+	if (bShowDialog)
+		DisplayDialog(vecDialogToShow, 10, 40);
+
+	if (bShowDialog)
+	{
+		if (GetKey(olc::Key::X).bPressed)
+		{
+			bShowDialog = false;
+			m_script.CompleteCommand();
+			//nSequenceCnt++;
+		}
+	}
+
+
+	DrawString(ScreenWidth() / 3, ScreenHeight() - 20, "Press SPACE to skip...");
+	if (GetKey(olc::Key::SPACE).bPressed)
+	{
+		nGameMode = MODE_LOCAL_MAP;
+	}
+
+
+	return true;
+}
 
 bool Platformer::UpdateLocalMap(float fElapsedTime)
 {

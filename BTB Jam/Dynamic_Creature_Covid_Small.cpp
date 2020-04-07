@@ -3,17 +3,17 @@
 #include "Assets.h" //One we want to change to match how he does his dependencies
 
 
-cDynamic_Creature_FakeJerry::cDynamic_Creature_FakeJerry() : cDynamic_Creature("Fake Jerry")
+cDynamic_Creature_Covid_Small::cDynamic_Creature_Covid_Small() : cDynamic_Creature("Covid_Small")
 {
 	bFriendly = false;
-	nHealth = 10;
-	nHealthMax = 10;
+	nHealth = 5;
+	nHealthMax = 5;
 	fStateTick = 2.0f;
 
 	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Basic Sword");
 }
 
-void cDynamic_Creature_FakeJerry::Behavior(float fElapsedTime, cDynamic* player)
+void cDynamic_Creature_Covid_Small::Behavior(float fElapsedTime, cDynamic* player)
 {
 	// Check if player is nearby
 	float fTargetX = player->px - px;
@@ -34,25 +34,23 @@ void cDynamic_Creature_FakeJerry::Behavior(float fElapsedTime, cDynamic* player)
 			else
 				fFaceDir = RIGHT; // 1.0f
 
-			if (fDistance < 1.5f)
-				PerformAttack();
+			if (bObjectOnGround)
+			{
+				vy = -6.0f; //Jump
+				vx = fFaceDir * 1.0f;
+			}
 		}
 		else
 		{
 			vx = 0;
+			vy = 0;
 		}
 
-		if (fTargetY < 0 && bObjectOnGround) //Jump
-			vy = -12.0f;
-
-
-		fStateTick += 0.8f;
+		fStateTick += 1.8f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2.5f - 1.8f))); //Jump at random times between 1.8 and 2.5 seconds
 	}
-	//vx += fFaceDir * 5.0f * fElapsedTime;
-	vx += fFaceDir * (bObjectOnGround && abs(vx) >= 0 ? 10.0f : bObjectOnGround ? 5.0f : 8.0f)* fElapsedTime;
 }
 
-void cDynamic_Creature_FakeJerry::PerformAttack()
+void cDynamic_Creature_Covid_Small::PerformAttack()
 {
 	if (pEquipedWeapon == nullptr)
 		return;

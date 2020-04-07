@@ -1,5 +1,5 @@
 #include "Quests.h"
-#include "Jerry_Engine.h"
+#include "JvC_Engine.h"
 
 cScriptProcessor* cQuest::g_script = nullptr;
 Platformer* cQuest::g_engine = nullptr;

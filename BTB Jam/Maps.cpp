@@ -137,7 +137,7 @@ bool cMap::Create(std::string fileName, std::string name)
 
 cMap_Level1::cMap_Level1()
 {
-	if (Create("../Levels/Level_1.txt", "Level 1"))
+	if (Create("../Levels/Level_1.txt", "Covid Tower"))
 		cout << "File loaded successfully\n";
 }
 
@@ -157,10 +157,10 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 
 	for (int i = 0; i < 3; i++)
 	{
-		cDynamic* g = new cDynamic_Creature_FakeJerry();
+		cDynamic* g = new cDynamic_Creature_Covid_Medium();
 		vecDyns.push_back(g);
 		g->px = rand() % 10 + 5.0f;
-		g->py = 0.0f;
+		g->py = 120.0f;
 	}
 
 	cDynamic* g = new cDynamic_Creature("Die");

@@ -3,7 +3,7 @@
 
 
 
-//Put "utility" functions like the DisplayDialog and others currently in Jerry_Engine
+//Put "utility" functions like the DisplayDialog and others currently in JvC_Engine
 
 
 namespace utility

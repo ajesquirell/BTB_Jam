@@ -103,6 +103,8 @@ void Assets::LoadItems()
 	load(new cItem_HealthBoost, 2);
 	load(new cItem_FlamesCash, 3);
 	load(new cWeapon_Sword, 4);
+	load(new cWeapon_Pistol, 5);
+	load(new cWeapon_Covid_Medium, 6);
 
 }
 

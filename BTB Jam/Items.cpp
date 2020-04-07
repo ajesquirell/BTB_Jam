@@ -1,7 +1,7 @@
 #include "Items.h"
 #include "Assets.h"
 #include "olcPGEX_Sound.h"
-#include "Jerry_Engine.h"
+#include "JvC_Engine.h"
 #include <algorithm>
 
 Platformer* cItem::g_engine = nullptr;
@@ -149,10 +149,10 @@ bool cWeapon::OnUse(cDynamic* object)
 }
 
 //================================================================================================
-//											Weapon - Sword
+//											Weapon - Covid Medium
 //================================================================================================
-cWeapon_Sword::cWeapon_Sword() :
-	cWeapon("Basic Sword", "A wooden sword - 5 dmg", 5)
+cWeapon_Covid_Medium::cWeapon_Covid_Medium() :
+	cWeapon("Covid Ball", "Deadly Covid Attack - 5 dmg", 5)
 {
 	//Add sprites here!
 	// Weapon Model Sprites (Can make him hold weapon later)
@@ -164,19 +164,19 @@ cWeapon_Sword::cWeapon_Sword() :
 	animProjectile.ChangeState("default");
 }
 
-bool cWeapon_Sword::OnUse(cDynamic* object)
+bool cWeapon_Covid_Medium::OnUse(cDynamic* object)
 {
 	// When weapons are used, they are used on the object that owns the weapon, i.e.
 	// the attacker. However this does not imply the attacker attacks themselves
 
-	//Get direction of attacker
+	//Get attacker
 	cDynamic_Creature* aggressor = (cDynamic_Creature*)object;
 
 	// Determine attack origin
 	float x, y, vx, vy;
-	if (aggressor->fFaceDir == cDynamic_Creature::LEFT) //Don't really need this, because we have fFaceDir
+	if (aggressor->fFaceDir == cDynamic_Creature::LEFT)
 	{
-		x = aggressor->px - 1.0f; //Not 1.0f in order for vector calculations in Jerry_Engine::Damage() to not be zero (sort of a hack)
+		x = aggressor->px - 1.0f;
 		y = aggressor->py;
 		vx = -1.0f; vy = 0.0f;
 	}
@@ -191,7 +191,7 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 	if (aggressor->nHealth == aggressor->nHealthMax)
 	{
 		// Beam Sword
-		cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, vx * 15.0f, vy * 15.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+		cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
 		p->bSolidVsMap = true;
 		p->bSolidVsDynamic = false;
 		p->nDamage = this->nDamage; //5
@@ -199,7 +199,16 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 		p->fKnockBackVel = 4.0f;
 		p->fKnockBackDuration = 0.1f;
 
+		cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+		p2->bSolidVsMap = true;
+		p2->bSolidVsDynamic = false;
+		p2->nDamage = this->nDamage; //5
+		p2->bOneHit = true;
+		p2->fKnockBackVel = 4.0f;
+		p2->fKnockBackDuration = 0.1f;
+
 		g_engine->AddProjectile(p);
+		g_engine->AddProjectile(p2);
 	}
 
 	cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
@@ -211,7 +220,7 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 
 	g_engine->AddProjectile(p);
 
-	return false; //Remove from inventory
+	return false;
 }
 
 //================================================================================================
@@ -242,7 +251,7 @@ bool cWeapon_Pistol::OnUse(cDynamic* object)
 	float x, y, vx, vy;
 	if (aggressor->fFaceDir == cDynamic_Creature::LEFT) //Don't really need this, because we have fFaceDir
 	{
-		x = aggressor->px - 1.0f; //Not 1.0f in order for vector calculations in Jerry_Engine::Damage() to not be zero (sort of a hack)
+		x = aggressor->px - 1.0f; //Not 1.0f in order for vector calculations in JvC_Engine::Damage() to not be zero (sort of a hack)
 		y = aggressor->py;
 		vx = -1.0f; vy = 0.0f;
 	}
@@ -277,5 +286,71 @@ bool cWeapon_Pistol::OnUse(cDynamic* object)
 
 	g_engine->AddProjectile(p);
 
-	return false; //Remove from inventory
+	return false;
+}
+
+//================================================================================================
+//											Weapon - Sword
+//================================================================================================
+cWeapon_Sword::cWeapon_Sword() :
+	cWeapon("Basic Sword", "A wooden sword - 5 dmg", 5)
+{
+	//Add sprites here!
+	// Weapon Model Sprites (Can make him hold weapon later)
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Squat"));
+	animItem.ChangeState("default");
+
+	// Projectile Sprites
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	animProjectile.ChangeState("default");
+}
+
+bool cWeapon_Sword::OnUse(cDynamic* object)
+{
+	// When weapons are used, they are used on the object that owns the weapon, i.e.
+	// the attacker. However this does not imply the attacker attacks themselves
+
+	//Get direction of attacker
+	cDynamic_Creature* aggressor = (cDynamic_Creature*)object;
+
+	// Determine attack origin
+	float x, y, vx, vy;
+	if (aggressor->fFaceDir == cDynamic_Creature::LEFT) //Don't really need this, because we have fFaceDir
+	{
+		x = aggressor->px - 1.0f; //Not 1.0f in order for vector calculations in JvC_Engine::Damage() to not be zero (sort of a hack)
+		y = aggressor->py;
+		vx = -1.0f; vy = 0.0f;
+	}
+
+	if (aggressor->fFaceDir == cDynamic_Creature::RIGHT)
+	{
+		x = aggressor->px + 1.0f;
+		y = aggressor->py;
+		vx = 1.0f; vy = 0.0f;
+	}
+
+	if (aggressor->nHealth == aggressor->nHealthMax)
+	{
+		// Beam Sword
+		cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, vx * 15.0f, vy * 15.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+		p->bSolidVsMap = true;
+		p->bSolidVsDynamic = false;
+		p->nDamage = this->nDamage; //5
+		p->bOneHit = true;
+		p->fKnockBackVel = 4.0f;
+		p->fKnockBackDuration = 0.1f;
+
+		g_engine->AddProjectile(p);
+	}
+
+	cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
+	p->bSolidVsMap = false;
+	p->bSolidVsDynamic = false;
+	p->nDamage = this->nDamage; //5
+	p->bOneHit = true;
+	p->fKnockBackVel = 7.0f;
+
+	g_engine->AddProjectile(p);
+
+	return false;
 }

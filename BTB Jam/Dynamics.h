@@ -120,6 +120,36 @@ private:
 };
 
 //================================================================================================
+//											Dynamic Creature - Covid Small
+//================================================================================================
+class cDynamic_Creature_Covid_Small : public cDynamic_Creature
+{
+public:
+	cDynamic_Creature_Covid_Small();
+
+	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
+	void PerformAttack() override;
+private:
+	//float fDirectionX;
+	//float fDirectionY;
+};
+
+//================================================================================================
+//											Dynamic Creature - Covid Medium
+//================================================================================================
+class cDynamic_Creature_Covid_Medium : public cDynamic_Creature
+{
+public:
+	cDynamic_Creature_Covid_Medium();
+
+	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
+	void PerformAttack() override;
+protected:
+	bool bAttackTick = true;
+};
+
+
+//================================================================================================
 //											Dynamic Teleport
 //================================================================================================
 class cDynamic_Teleport : public cDynamic
