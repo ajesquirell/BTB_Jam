@@ -163,14 +163,7 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 		g->py = 120.0f;
 	}
 
-	cDynamic* g = new cDynamic_Creature("Die");
-	vecDyns.push_back(g);
-	g->px = 11.0f;
-	g->py = 3.0f;
-	//g->vx = -8.0f;
-	//g->vy = -8.0f;
-	g->bFriendly = false;
-	//g->bGravityApplies = false;
+
 
 	/*cAnimator* a = new cAnimator;
 	a->mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Idle"));

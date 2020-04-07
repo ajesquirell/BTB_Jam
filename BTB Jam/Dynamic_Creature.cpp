@@ -12,25 +12,6 @@ cDynamic_Creature::cDynamic_Creature(std::string n) : cDynamic(n)
 
 	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Jerry_Idle"));
 
-	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_1"));
-	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_2"));
-	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_3"));
-	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_4"));
-
-	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Jerry_Brake_1"));
-	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Jerry_Brake_2"));
-	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Jerry_Brake_3"));
-	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Jerry_Brake_4"));
-	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Jerry_Brake_5"));
- 
-	animations.mapStates["squat"].push_back(Assets::get().GetSprite("Jerry_Squat"));
-
-	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Jerry_Jump_1"));
-	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Jerry_Jump_2"));
-
-
-	animations.mapStates["fall"].push_back(Assets::get().GetSprite("Jerry_Fall"));
-
 	animations.ChangeState("idle");
 }
 
@@ -92,38 +73,9 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 	}
 	else
 	{
-		if (bObjectOnGround)
-		{
-			if (fabs(vx) == 0.0f)
-			{
-				animations.ChangeState("idle");
-			}
-			else if (fFaceDir == RIGHT && vx < 0 || fFaceDir == LEFT && vx > 0) //Just changed direction but still moving the opposite way -> braking
-			{
-				animations.ChangeState("brake");
-			}
-			else
-			{
-				animations.ChangeState("run");
-			}
-
-			if (bSquat) //This is changed in the Input Handling section
-				animations.ChangeState("squat");
-		}
-		else
-		{
-			if (vy <= 0)
-			{
-				animations.ChangeState("jump", true);
-			}
-			else
-			{
-				animations.ChangeState("fall");
-			}
-		}
+		UpdateAnimationState(fElapsedTime);
 
 		// Update facing direction when under control of script processor. Otherwise handled by input (player) or in creature's behavior
-		//if (sName != "Jerry")
 		if (!g_script->bPlayerControlEnabled)
 			fFaceDir = (vx < 0 ? -1.0f : vx > 0 ? 1.0f : fFaceDir);
 
@@ -162,4 +114,8 @@ void cDynamic_Creature::KnockBack(float dx, float dy, cDynamic_Projectile* proj)
 void cDynamic_Creature::Behavior(float fElapsedTime, cDynamic* player)
 {
 	//No default behavior
+}
+
+void cDynamic_Creature::UpdateAnimationState(float fElapsedTime)
+{
 }

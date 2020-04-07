@@ -188,37 +188,25 @@ bool cWeapon_Covid_Medium::OnUse(cDynamic* object)
 		vx = 1.0f; vy = 0.0f;
 	}
 
-	if (aggressor->nHealth == aggressor->nHealthMax)
-	{
-		// Beam Sword
-		cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
-		p->bSolidVsMap = true;
-		p->bSolidVsDynamic = false;
-		p->nDamage = this->nDamage; //5
-		p->bOneHit = true;
-		p->fKnockBackVel = 4.0f;
-		p->fKnockBackDuration = 0.1f;
-
-		cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
-		p2->bSolidVsMap = true;
-		p2->bSolidVsDynamic = false;
-		p2->nDamage = this->nDamage; //5
-		p2->bOneHit = true;
-		p2->fKnockBackVel = 4.0f;
-		p2->fKnockBackDuration = 0.1f;
-
-		g_engine->AddProjectile(p);
-		g_engine->AddProjectile(p2);
-	}
-
-	cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
-	p->bSolidVsMap = false;
+	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+	p->bSolidVsMap = true;
 	p->bSolidVsDynamic = false;
 	p->nDamage = this->nDamage; //5
 	p->bOneHit = true;
-	p->fKnockBackVel = 7.0f;
+	p->fKnockBackVel = 4.0f;
+	p->fKnockBackDuration = 0.1f;
+
+	cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+	p2->bSolidVsMap = true;
+	p2->bSolidVsDynamic = false;
+	p2->nDamage = this->nDamage; //5
+	p2->bOneHit = true;
+	p2->fKnockBackVel = 4.0f;
+	p2->fKnockBackDuration = 0.1f;
 
 	g_engine->AddProjectile(p);
+	g_engine->AddProjectile(p2);
+
 
 	return false;
 }

@@ -10,6 +10,24 @@ cDynamic_Creature_Covid_Medium::cDynamic_Creature_Covid_Medium() : cDynamic_Crea
 	nHealthMax = 8;
 	fStateTick = 2.0f;
 
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_00"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_01"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_02"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_03"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_04"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_05"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_06"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_07"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_08"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_09"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_10"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_11"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_12"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_13"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_14"));
+
+	animations.ChangeState("default");
+
 	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Covid Ball");
 }
 
@@ -45,7 +63,7 @@ void cDynamic_Creature_Covid_Medium::Behavior(float fElapsedTime, cDynamic* play
 			vy = 0;
 		}
 
-		fStateTick += 1.8f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2.5f - 1.8f))); //Jump at random times between 1.8 and 2.5 seconds
+		fStateTick += 1.8f + static_cast <float> (rand()) / (static_cast <float> (RAND_MAX / (2.8f - 1.8f))); //Jump at random times between 1.8 and 2.5 seconds
 	}
 
 	//vx += fFaceDir * 1.0f * fElapsedTime;
@@ -64,4 +82,8 @@ void cDynamic_Creature_Covid_Medium::PerformAttack()
 		return;
 
 	pEquipedWeapon->OnUse(this);
+}
+
+void cDynamic_Creature_Covid_Medium::UpdateAnimationState(float fElapsedTime)
+{
 }

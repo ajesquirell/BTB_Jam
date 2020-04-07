@@ -26,12 +26,12 @@ bool cQuest::OnInteraction(std::vector<cDynamic*>& vecDyns, cDynamic* target, NA
 //================================================================================================
 bool cQuest_MainQuest::PopulateDynamics(std::vector<cDynamic*>& vecDyns, std::string sMapName)
 {
-	if (sMapName == "Level 1")
+	if (sMapName == "Covid Tower")
 	{
 		if (nPhase == 0)
 		{
 			cDynamic_Creature* bob = new cDynamic_Creature("Bob");
-			bob->px = 25.0f;
+			bob->px = 17.0f;
 			bob->py = 0.0f;
 			bob->fFaceDir = -1.0f;
 			vecDyns.push_back(bob);
@@ -40,6 +40,7 @@ bool cQuest_MainQuest::PopulateDynamics(std::vector<cDynamic*>& vecDyns, std::st
 			nasser->px = 20.0f;
 			nasser->py = 0.0f;
 			nasser->fFaceDir = -1.0f;
+			nasser->bFriendly = false;
 			vecDyns.push_back(nasser);
 	}
 

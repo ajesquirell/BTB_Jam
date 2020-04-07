@@ -75,6 +75,44 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 	 load("Money_12", "../Sprites/Money/Money_12.png");
 	 load("Money_13", "../Sprites/Money/Money_13.png");
 
+	 // Enemies
+	 load("Covid_Small_00", "../Sprites/Covid_Small/sprite_00.png");
+	 load("Covid_Small_01", "../Sprites/Covid_Small/sprite_01.png");
+	 load("Covid_Small_02", "../Sprites/Covid_Small/sprite_02.png");
+	 load("Covid_Small_03", "../Sprites/Covid_Small/sprite_03.png");
+	 load("Covid_Small_04", "../Sprites/Covid_Small/sprite_04.png");
+	 load("Covid_Small_05", "../Sprites/Covid_Small/sprite_05.png");
+	 load("Covid_Small_06", "../Sprites/Covid_Small/sprite_06.png");
+	 load("Covid_Small_07", "../Sprites/Covid_Small/sprite_07.png");
+	 load("Covid_Small_08", "../Sprites/Covid_Small/sprite_08.png");
+	 load("Covid_Small_09", "../Sprites/Covid_Small/sprite_09.png");
+	 load("Covid_Small_10", "../Sprites/Covid_Small/sprite_10.png");
+	 load("Covid_Small_11", "../Sprites/Covid_Small/sprite_11.png");
+	 load("Covid_Small_12", "../Sprites/Covid_Small/sprite_12.png");
+	 load("Covid_Small_13", "../Sprites/Covid_Small/sprite_13.png");
+	 load("Covid_Small_14", "../Sprites/Covid_Small/sprite_14.png");
+	 load("Covid_Small_15", "../Sprites/Covid_Small/sprite_15.png");
+	 load("Covid_Small_16", "../Sprites/Covid_Small/sprite_16.png");
+	 load("Covid_Small_17", "../Sprites/Covid_Small/sprite_17.png");
+
+	 load("Covid_Medium_00", "../Sprites/Covid_Medium/sprite_00.png");
+	 load("Covid_Medium_01", "../Sprites/Covid_Medium/sprite_01.png");
+	 load("Covid_Medium_02", "../Sprites/Covid_Medium/sprite_02.png");
+	 load("Covid_Medium_03", "../Sprites/Covid_Medium/sprite_03.png");
+	 load("Covid_Medium_04", "../Sprites/Covid_Medium/sprite_04.png");
+	 load("Covid_Medium_05", "../Sprites/Covid_Medium/sprite_05.png");
+	 load("Covid_Medium_06", "../Sprites/Covid_Medium/sprite_06.png");
+	 load("Covid_Medium_07", "../Sprites/Covid_Medium/sprite_07.png");
+	 load("Covid_Medium_08", "../Sprites/Covid_Medium/sprite_08.png");
+	 load("Covid_Medium_09", "../Sprites/Covid_Medium/sprite_09.png");
+	 load("Covid_Medium_10", "../Sprites/Covid_Medium/sprite_10.png");
+	 load("Covid_Medium_11", "../Sprites/Covid_Medium/sprite_11.png");
+	 load("Covid_Medium_12", "../Sprites/Covid_Medium/sprite_12.png");
+	 load("Covid_Medium_13", "../Sprites/Covid_Medium/sprite_13.png");
+	 load("Covid_Medium_14", "../Sprites/Covid_Medium/sprite_14.png");
+
+
+
 	 //Random
 	 load("Hi_Mom", "../Sprites/Hi_Mom.png");
 	 load("Health", "../Sprites/Health.png");

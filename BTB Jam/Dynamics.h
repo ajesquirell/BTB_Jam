@@ -78,6 +78,8 @@ public:
 	virtual void PerformAttack() {};
 	void KnockBack(float dx, float dy, cDynamic_Projectile* proj);
 
+	virtual void UpdateAnimationState(float fElapsedTime); // Because each creature may have differing requirements for changing their state, if any
+
 	cWeapon* pEquipedWeapon = nullptr;
 
 protected:
@@ -99,8 +101,8 @@ class cDynamic_Creature_Jerry : public cDynamic_Creature
 public:
 	cDynamic_Creature_Jerry();
 
-public:
 	void PerformAttack() override;
+	void UpdateAnimationState(float fElapsedTime) override;
 	int nScore;
 };
 
@@ -114,6 +116,7 @@ public:
 
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
+	void UpdateAnimationState(float fElapsedTime) override;
 private:
 	//float fDirectionX;
 	//float fDirectionY;
@@ -129,9 +132,7 @@ public:
 
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
-private:
-	//float fDirectionX;
-	//float fDirectionY;
+	void UpdateAnimationState(float fElapsedTime) override;
 };
 
 //================================================================================================
@@ -144,6 +145,7 @@ public:
 
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
+	void UpdateAnimationState(float fElapsedTime) override;
 protected:
 	bool bAttackTick = true;
 };

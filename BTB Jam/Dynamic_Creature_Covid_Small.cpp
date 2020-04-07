@@ -10,7 +10,29 @@ cDynamic_Creature_Covid_Small::cDynamic_Creature_Covid_Small() : cDynamic_Creatu
 	nHealthMax = 5;
 	fStateTick = 2.0f;
 
-	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Basic Sword");
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_00"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_01"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_02"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_03"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_04"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_05"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_06"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_07"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_08"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_09"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_10"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_11"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_12"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_13"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_14"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_15"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_16"));
+	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_17"));
+
+	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Covid_Small_00"));
+
+
+	animations.ChangeState("default");
 }
 
 void cDynamic_Creature_Covid_Small::Behavior(float fElapsedTime, cDynamic* player)
@@ -56,4 +78,12 @@ void cDynamic_Creature_Covid_Small::PerformAttack()
 		return;
 
 	pEquipedWeapon->OnUse(this);
+}
+
+void cDynamic_Creature_Covid_Small::UpdateAnimationState(float fElapsedTime)
+{
+	if (!bObjectOnGround)
+		animations.ChangeState("jump");
+	else
+		animations.ChangeState("default");
 }
