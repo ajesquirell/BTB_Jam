@@ -97,6 +97,18 @@ bool cMap::Create(std::string fileName, std::string name)
 				case 'G':
 					SetTile(x, y, new cTile_Gate(x, y));
 					break;
+				case 'S':
+					SetTile(x, y, new cTile_Sky(x, y));
+					vecPersistentCreatures.push_back(new cDynamic_Creature_Covid_Small);
+					vecPersistentCreatures.back()->px = x;
+					vecPersistentCreatures.back()->py = y;
+					break;
+				case 'M':
+					SetTile(x, y, new cTile_Sky(x, y));
+					vecPersistentCreatures.push_back(new cDynamic_Creature_Covid_Medium);
+					vecPersistentCreatures.back()->px = x;
+					vecPersistentCreatures.back()->py = y;
+					break;
 				default:
 					tiles[y * nWidth + x] = new cTile_Invisible_Boundary(x, y);
 					break;
@@ -144,7 +156,7 @@ cMap_Level1::cMap_Level1()
 bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 {
 	//Add Teleporters
-	//vecDyns.push_back(new cDynamic_Teleport(7.0f, 9.0f, "Level 2", 0.0f, 0.0f));
+	//vecDyns.push_back(new cDynamic_Teleport(7.0f, 115.0f, "Level 2", 0.0f, 0.0f));
 
 	//Add Items
 	vecDyns.push_back(new cDynamic_Item(1, 9, Assets::get().GetItem("Health")));
@@ -155,12 +167,21 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 	for (auto item : vecPersistentItems)
 		vecDyns.push_back(item);
 
+	//Add enemies stored in level data
+	for (auto creature : vecPersistentCreatures)
+		vecDyns.push_back(creature);
+
 	for (int i = 0; i < 3; i++)
 	{
 		cDynamic* g = new cDynamic_Creature_Covid_Medium();
 		vecDyns.push_back(g);
 		g->px = rand() % 10 + 5.0f;
 		g->py = 120.0f;
+
+		cDynamic* h = new cDynamic_Creature_Covid_Small();
+		vecDyns.push_back(h);
+		h->px = rand() % 10 + 5.0f;
+		h->py = 125.0f;
 	}
 
 
@@ -207,7 +228,7 @@ cMap_Level2::cMap_Level2()
 bool cMap_Level2::PopulateDynamics(vector<cDynamic*>& vecDyns)
 {
 	//Add Teleporters
-	//vecDyns.push_back(new cDynamic_Teleport(10.0f, 5.0f, "Level 1", 0.0f, 0.0f));
+	//vecDyns.push_back(new cDynamic_Teleport(10.0f, 15.0f, "Covid Tower", 0.0f, 0.0f));
 
 	//Add Items stored in level
 	for (auto item : vecPersistentItems)

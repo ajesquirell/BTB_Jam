@@ -645,7 +645,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	DrawSprite(0, 0, backBuff);
 
 	// Draw Score
-	sScoreString = "Flames Cash: " + to_string(m_pPlayer->nScore);
+	sScoreString = "Hand Sanitizer: " + to_string(m_pPlayer->nScore);
 	DrawString(1, 1, sScoreString, olc::RED);
 
 	// Draw Health
@@ -679,8 +679,8 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	*/
 
-	DrawString(140, 1, "Jerryyyyyyyy", olc::Pixel(rand() % 255, rand() % 255, rand() % 255));
-	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: F, Inventory: A\nPAUSE: P", olc::DARK_MAGENTA);
+	DrawString(140, 1, "Javid vs. Covid", olc::Pixel(rand() % 255, rand() % 255, rand() % 255));
+	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: X, Inventory: Z\nPAUSE: P", olc::DARK_MAGENTA);
 
 	//Game end (for now of course)
 	if (m_pPlayer->nScore >= 370)

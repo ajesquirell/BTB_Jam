@@ -47,6 +47,7 @@ public:
 protected:
 	std::vector<cDynamic_Item*> vecPersistentItems; //Items loaded into map at launch, won't respawn every change of map
 	//?Reset items to original "loaded-from-file" state function for when we come back to the "world" or whatever and want to replay?
+	std::vector<cDynamic_Creature*> vecPersistentCreatures;
 
 private:
 	cTile** tiles = nullptr;	//Going to be an array of pointers to tiles
