@@ -9,6 +9,7 @@ cDynamic_Creature_Covid_Small::cDynamic_Creature_Covid_Small() : cDynamic_Creatu
 	nHealth = 5;
 	nHealthMax = 5;
 	fStateTick = 2.0f;
+	nDimensions = 10;
 
 	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_00"));
 	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Small_01"));

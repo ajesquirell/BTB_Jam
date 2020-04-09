@@ -45,8 +45,8 @@ public:
 
 	// Used for collision detection with sprites of varying sizes (other than the standard tile size of 22x22)
 	// Difference between the size of this object and the nearest multiple of tile size (22), which is remainder - Modulus operator
-	// i.e. if dimensions are 32x32, then dif is 10 (32 % 22 == 10), if dimensions are 68x68, result is 2 (68 % 22 = 2)
-	int GetDimensionDif() { return nDimensions % 22; }
+	// i.e. if dimensions are 32x32, then dif is 10 (32 % 22 == 10), if dimensions are 68x68, result is 2 (68 % 22 = 2) -- If dimensions are smaller than standard tile size, we just want the negative difference
+	int GetDimensionDif() { return nDimensions >= 22 ? nDimensions % 22 : nDimensions - 22; }
 
 protected:
 	int nDimensions = 22; // Default dimensions match tile size
