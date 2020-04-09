@@ -26,7 +26,7 @@ bool cQuest::OnInteraction(std::vector<cDynamic*>& vecDyns, cDynamic* target, NA
 //================================================================================================
 bool cQuest_MainQuest::PopulateDynamics(std::vector<cDynamic*>& vecDyns, std::string sMapName)
 {
-	if (sMapName == "Covid Tower")
+	if (sMapName == "Coronatower")
 	{
 		if (nPhase == 0)
 		{

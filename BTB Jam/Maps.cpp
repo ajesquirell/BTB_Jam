@@ -149,7 +149,7 @@ bool cMap::Create(std::string fileName, std::string name)
 
 cMap_Level1::cMap_Level1()
 {
-	if (Create("../Levels/Level_1.txt", "Covid Tower"))
+	if (Create("../Levels/Level_1.txt", "Coronatower"))
 		cout << "File loaded successfully\n";
 }
 
@@ -228,7 +228,7 @@ cMap_Level2::cMap_Level2()
 bool cMap_Level2::PopulateDynamics(vector<cDynamic*>& vecDyns)
 {
 	//Add Teleporters
-	//vecDyns.push_back(new cDynamic_Teleport(10.0f, 15.0f, "Covid Tower", 0.0f, 0.0f));
+	//vecDyns.push_back(new cDynamic_Teleport(10.0f, 15.0f, "Coronatower", 0.0f, 0.0f));
 
 	//Add Items stored in level
 	for (auto item : vecPersistentItems)

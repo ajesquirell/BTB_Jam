@@ -50,7 +50,7 @@ bool Platformer::OnUserCreate()
 	GiveItem(m_pPlayer->pEquipedWeapon);
 
 	//Initial Map
-	ChangeMap("Covid Tower", 1, Assets::get().GetMap("Covid Tower")->nHeight - 2);
+	ChangeMap("Coronatower", 1, Assets::get().GetMap("Coronatower")->nHeight - 2);
 	fCameraPosY = pCurrentMap->nHeight;
 
 	return true;
@@ -441,7 +441,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 					//Already resolved X-direction collisions, so we can use the new X position and new Y position
 					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), fNewObjectPosY + 0.0f - (object->GetDimensionDif() / 22.0f))->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.99999f, fNewObjectPosY + 0.0f - (object->GetDimensionDif() / 22.0f))->solid)
 					{
-						/***Check for breakable blocks (putting here allows for collision AND breaking)***/  //We could get rid of breakable flag and just use return from OnBreak()
+						/***Check for breakable blocks (putting here allows for collision AND breaking)***/  // Breaking/ punching not supported for non-standard sprite sizes (yet?) due to time, and ideally for now only player will be breaking blocks anyways
 						if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f, fNewObjectPosY + 0.0f)->solid && pCurrentMap->GetTile(fNewObjectPosX + 1.0f, fNewObjectPosY + 0.0f)->solid) //Needs to be first in if statement(checked first)
 						{
 							pCurrentMap->GetTile(fNewObjectPosX + 0.5f, fNewObjectPosY + 0.0f)->OnPunch(); //Only break one block at a time
@@ -470,7 +470,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 				else //Player moving down
 				{
 					//Allow to fit in 1 wide gap going down
-					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f + 0.15f, fNewObjectPosY + 1.0f)->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.99999f - 0.15f, fNewObjectPosY + 1.0f)->solid)
+					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f + 0.15f - (object->GetDimensionDif() / 22.0f), fNewObjectPosY + 1.0f)->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.99999f - 0.15f, fNewObjectPosY + 1.0f)->solid)
 					{
 						fNewObjectPosY = (int)fNewObjectPosY;
 						object->vy = 0;
@@ -534,8 +534,8 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 						if (object == m_pPlayer) // Only player can interact with items and such (could change to make things interesting)
 						{
 							bool bInteraction = false; //Not sure if going to use - would use this same way as with input, so we limit the number of responses we get from an interaction to only the most important
-							if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px
-								&& fDynamicObjectPosY < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py)
+							if (fDynamicObjectPosX - (object->GetDimensionDif() / 22.0f) < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px - (dyn->GetDimensionDif() / 22.0f)
+								&& fDynamicObjectPosY - (object->GetDimensionDif() / 22.0f) < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py - (dyn->GetDimensionDif() / 22.0f))
 							{
 								if (!bInteraction)
 								{
@@ -556,8 +556,8 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 						{
 							if (bWorkingWithProjectiles)
 							{
-								if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px
-									&& fDynamicObjectPosY < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py)
+								if (fDynamicObjectPosX - (object->GetDimensionDif() / 22.0f) < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px - (dyn->GetDimensionDif() / 22.0f)
+									&& fDynamicObjectPosY - (object->GetDimensionDif() / 22.0f) < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py - (dyn->GetDimensionDif() / 22.0f))
 								{
 									if (dyn->bFriendly != object->bFriendly)
 									{

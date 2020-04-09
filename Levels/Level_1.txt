@@ -119,12 +119,12 @@ FFFFFF.................F
 F.....F................F
 F......F...............F
 F.......F..............F
-F........F.............F
+F..oooo..F.............F
 F.........F............F
 F...oooo...............F
-FFFFFFFFGGGGFFFFFFFFFFFF
+FFFFFFFGGGGFFFFFFFFFFFFF
 F.........F............F
 F........F.............F
-F.......F..............F
+F......................F
 F..............GG..o...F
 FFFFFFFFFFFFFFFFFFFFFFFF
