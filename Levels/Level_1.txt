@@ -124,7 +124,7 @@ F.........F............F
 F...oooo...............F
 FFFFFFFFGGGGFFFFFFFFFFFF
 F.........F............F
-F........F.......SSSSSSF
+F........F.............F
 F.......F..............F
 F..............GG..o...F
 FFFFFFFFFFFFFFFFFFFFFFFF

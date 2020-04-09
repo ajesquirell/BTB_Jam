@@ -78,13 +78,13 @@ protected:
 };
 
 //================================================================================================
-//											Weapon - Covid Medium
+//											Weapon - Covid Projectile
 //================================================================================================
 
-class cWeapon_Covid_Medium : public cWeapon
+class cWeapon_Covid_Projectile : public cWeapon
 {
 public:
-	cWeapon_Covid_Medium();
+	cWeapon_Covid_Projectile();
 
 public:
 	bool OnUse(cDynamic* object) override;

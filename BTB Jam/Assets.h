@@ -67,7 +67,7 @@ public:
 			return new cWeapon_Pistol;
 			break;
 		case 6:
-			return new cWeapon_Covid_Medium;
+			return new cWeapon_Covid_Projectile;
 			break;
 		}
 	}

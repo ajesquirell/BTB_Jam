@@ -12,7 +12,29 @@ cDynamic_Creature_Jerry::cDynamic_Creature_Jerry() : cDynamic_Creature("Jerry")
 	nHealthMax = 10;
 	nScore = 0;
 
-	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	nDimensions = 32;
+	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+	animations.mapStates["run"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["run"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["run"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["run"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["brake"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+	animations.mapStates["squat"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+
+	animations.mapStates["fall"].push_back(Assets::get().GetSprite("Covid_Large_00"));
+
+	/*animations.mapStates["idle"].push_back(Assets::get().GetSprite("Jerry_Idle"));
 
 	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_1"));
 	animations.mapStates["run"].push_back(Assets::get().GetSprite("Jerry_Run_2"));
@@ -31,11 +53,11 @@ cDynamic_Creature_Jerry::cDynamic_Creature_Jerry() : cDynamic_Creature("Jerry")
 	animations.mapStates["jump"].push_back(Assets::get().GetSprite("Jerry_Jump_2"));
 
 
-	animations.mapStates["fall"].push_back(Assets::get().GetSprite("Jerry_Fall"));
+	animations.mapStates["fall"].push_back(Assets::get().GetSprite("Jerry_Fall"));*/
 
 	animations.ChangeState("idle");
 
-	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Basic Sword");
+	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Covid Ball");
 }
 
 void cDynamic_Creature_Jerry::PerformAttack()

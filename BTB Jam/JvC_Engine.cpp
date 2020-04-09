@@ -40,9 +40,7 @@ bool Platformer::OnUserCreate()
 
 
 	//Sound
-	olc::SOUND::InitialiseAudio(44100, 1, 8, 512);
-
-	olc::SOUND::PlaySample(Assets::get().GetSound("LitLoop"), true); // Plays Sample C loop
+	olc::SOUND::InitialiseAudio(44100U, 1U, 8U, 512U);
 
 	//Add First Quest
 	listQuests.push_front(new cQuest_MainQuest());
@@ -71,12 +69,12 @@ bool Platformer::OnUserUpdate(float fElapsedTime)
 	{
 		if (!bGamePaused) {
 			bGamePaused = true; /*Pause*/
-			olc::SOUND::StopSample(Assets::get().GetSound("LitLoop"));
+			olc::SOUND::StopSample(Assets::get().GetSound("CleanSlate"));
 			//olc::SOUND::PlaySample(Assets::get().GetSound("sndGetMoney"));
 		}
 		else {
 			bGamePaused = false; /*Unpause*/
-			olc::SOUND::PlaySample(Assets::get().GetSound("LitLoop"), true);
+			olc::SOUND::PlaySample(Assets::get().GetSound("CleanSlate"), true);
 		}
 	}
 	if (bGamePaused)
@@ -128,6 +126,7 @@ bool Platformer::UpdateTitleScreen(float fElapsedTime)
 		}
 		if (nSequenceCnt == 3)
 		{
+			olc::SOUND::PlaySample(Assets::get().GetSound("CleanSlate"), true); // Plays loop
 			CMD(ShowDialog({ "Hello World!", "Covid-19 is worse than we ever imagined" }));
 		}
 		if (nSequenceCnt == 4)
@@ -170,6 +169,9 @@ bool Platformer::UpdateTitleScreen(float fElapsedTime)
 	DrawString(ScreenWidth() / 3, ScreenHeight() - 20, "Press SPACE to skip...");
 	if (GetKey(olc::Key::SPACE).bPressed)
 	{
+		if (olc::SOUND::listActiveSamples.empty())
+			olc::SOUND::PlaySample(Assets::get().GetSound("CleanSlate"), true); // Plays loop
+
 		nGameMode = MODE_LOCAL_MAP;
 	}
 
@@ -405,16 +407,20 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 
 				if (object->vx <= 0) //Player moving left
 				{
-					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f, object->py + 0.0f)->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.0f, object->py + 0.9f)->solid)  //0.9f because we're not checking Y direction collision right here, and we don't want that to register a collsion, but we still have to check that bottom left corner of the player
-					{																																//And the 0.9f allows player to fit in gaps that are only 1 unit across
-						fNewObjectPosX = (int)fNewObjectPosX + 1;																					//Basically makes so truncation of tiles doesn't catch us.
+					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), object->py + 0.0f - (object->GetDimensionDif() / 22.0f))->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), object->py + 0.9f)->solid)  //0.9f because we're not checking Y direction collision right here, and we don't want that to register a collsion, but we still have to check that bottom left corner of the player
+					{																																																																	//And the 0.9f allows player to fit in gaps that are only 1 unit across
+						if (object->GetDimensionDif() == 0) // Standard size																																																			//Basically makes so truncation of tiles doesn't catch us.
+							fNewObjectPosX = (int)fNewObjectPosX + 1;		
+						else // Non-standard size object
+							fNewObjectPosX = (int)fNewObjectPosX + (object->GetDimensionDif() / 22.0f);
+
 						object->vx = 0;
 						bCollisionWithMap = true;
 					}
 				}
 				else if (object->vx > 0) //Player moving Right
 				{
-					if (pCurrentMap->GetTile(fNewObjectPosX + 1.0f, object->py + 0.0f)->solid || pCurrentMap->GetTile(fNewObjectPosX + 1.0f, object->py + 0.9f)->solid)
+					if (pCurrentMap->GetTile(fNewObjectPosX + 1.0f, object->py + 0.0f - (object->GetDimensionDif() / 22.0f))->solid || pCurrentMap->GetTile(fNewObjectPosX + 1.0f, object->py + 0.9f)->solid)
 					{
 						fNewObjectPosX = (int)fNewObjectPosX;
 						object->vx = 0;
@@ -433,7 +439,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 				if (object->vy <= 0) //Player moving up
 				{
 					//Already resolved X-direction collisions, so we can use the new X position and new Y position
-					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f, fNewObjectPosY + 0.0f)->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.99999f, fNewObjectPosY + 0.0f)->solid)
+					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), fNewObjectPosY + 0.0f - (object->GetDimensionDif() / 22.0f))->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.99999f, fNewObjectPosY + 0.0f - (object->GetDimensionDif() / 22.0f))->solid)
 					{
 						/***Check for breakable blocks (putting here allows for collision AND breaking)***/  //We could get rid of breakable flag and just use return from OnBreak()
 						if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f, fNewObjectPosY + 0.0f)->solid && pCurrentMap->GetTile(fNewObjectPosX + 1.0f, fNewObjectPosY + 0.0f)->solid) //Needs to be first in if statement(checked first)
@@ -453,7 +459,11 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 
 						/***********************************************************************************/
 
-						fNewObjectPosY = (int)fNewObjectPosY + 1;
+						if (object->GetDimensionDif() == 0) // Standard Size
+							fNewObjectPosY = (int)fNewObjectPosY + 1;
+						else
+							fNewObjectPosY = (int)fNewObjectPosY + (object->GetDimensionDif() / 22.0f);
+
 						object->vy = 0;
 					}
 				}
@@ -491,27 +501,27 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 					// If objects are solid then they must not overlap
 					if (dyn->bSolidVsDynamic && object->bSolidVsDynamic)
 					{
-						if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px
-							&& object->py < (dyn->py + 1.0f) && (object->py + 1.0f) > dyn->py)
+						if (fDynamicObjectPosX - (object->GetDimensionDif() / 22.0f) < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px - (dyn->GetDimensionDif() / 22.0f)
+							&& object->py - (object->GetDimensionDif() / 22.0f) < (dyn->py + 1.0f) && (object->py + 1.0f) > dyn->py - (dyn->GetDimensionDif() / 22.0f))
 						{
 							// First check horizontally - Left first
 							if (object->vx <= 0)
-								fDynamicObjectPosX = dyn->px + 1.0f;
+								fDynamicObjectPosX = dyn->px + 1.0f + (object->GetDimensionDif() / 22.0f);
 							else
-								fDynamicObjectPosX = dyn->px - 1.0f;
+								fDynamicObjectPosX = dyn->px - 1.0f - (dyn->GetDimensionDif() / 22.0f);
 
 							object->vx = 0;
 						}
 
-						if (fDynamicObjectPosX < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px
-							&& fDynamicObjectPosY < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py)
+						if (fDynamicObjectPosX  - (object->GetDimensionDif() / 22.0f) < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px - (dyn->GetDimensionDif() / 22.0f)
+							&& fDynamicObjectPosY - (object->GetDimensionDif() / 22.0f) < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py - (dyn->GetDimensionDif() / 22.0f))
 						{
 							//Then check vertically - Up first
 							if (object->vy <= 0)
-								fDynamicObjectPosY = dyn->py + 1.0f;
+								fDynamicObjectPosY = dyn->py + 1.0f + (object->GetDimensionDif() / 22.0f);
 							else
 							{
-								fDynamicObjectPosY = dyn->py - 1.0f;
+								fDynamicObjectPosY = dyn->py - 1.0f - (dyn->GetDimensionDif() / 22.0f);
 								object->bObjectOnGround = true;
 							}
 

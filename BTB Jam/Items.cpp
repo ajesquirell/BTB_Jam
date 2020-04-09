@@ -149,22 +149,38 @@ bool cWeapon::OnUse(cDynamic* object)
 }
 
 //================================================================================================
-//											Weapon - Covid Medium
+//											Weapon - Covid Projectile
 //================================================================================================
-cWeapon_Covid_Medium::cWeapon_Covid_Medium() :
+cWeapon_Covid_Projectile::cWeapon_Covid_Projectile() :
 	cWeapon("Covid Ball", "Deadly Covid Attack - 5 dmg", 5)
 {
 	//Add sprites here!
 	// Weapon Model Sprites (Can make him hold weapon later)
-	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Squat"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_00"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_01"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_02"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_03"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_04"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_05"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_06"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_07"));
+
 	animItem.ChangeState("default");
 
 	// Projectile Sprites
-	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_00"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_01"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_02"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_03"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_04"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_05"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_06"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Projectile_07"));
+
 	animProjectile.ChangeState("default");
 }
 
-bool cWeapon_Covid_Medium::OnUse(cDynamic* object)
+bool cWeapon_Covid_Projectile::OnUse(cDynamic* object)
 {
 	// When weapons are used, they are used on the object that owns the weapon, i.e.
 	// the attacker. However this does not imply the attacker attacks themselves
@@ -188,7 +204,7 @@ bool cWeapon_Covid_Medium::OnUse(cDynamic* object)
 		vx = 1.0f; vy = 0.0f;
 	}
 
-	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, cDynamic_Creature::LEFT);
 	p->bSolidVsMap = true;
 	p->bSolidVsDynamic = false;
 	p->nDamage = this->nDamage; //5
@@ -196,7 +212,7 @@ bool cWeapon_Covid_Medium::OnUse(cDynamic* object)
 	p->fKnockBackVel = 4.0f;
 	p->fKnockBackDuration = 0.1f;
 
-	cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, aggressor->fFaceDir);
+	cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, cDynamic_Creature::RIGHT);
 	p2->bSolidVsMap = true;
 	p2->bSolidVsDynamic = false;
 	p2->nDamage = this->nDamage; //5

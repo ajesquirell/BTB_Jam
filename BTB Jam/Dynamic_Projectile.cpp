@@ -36,4 +36,6 @@ void cDynamic_Projectile::Update(float fElapsedTime, cDynamic* player)
 	fDuration -= fElapsedTime;
 	if (fDuration <= 0.0f)
 		bRedundant = true; // To be deleted
+
+	animProjectile.Update(fElapsedTime);
 }

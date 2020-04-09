@@ -142,6 +142,7 @@
     <ClCompile Include="Commands.cpp" />
     <ClCompile Include="Dynamic_Base.cpp" />
     <ClCompile Include="Dynamic_Creature.cpp" />
+    <ClCompile Include="Dynamic_Creature_Covid_Large.cpp" />
     <ClCompile Include="Dynamic_Creature_Covid_Medium.cpp" />
     <ClCompile Include="Dynamic_Creature_Covid_Small.cpp" />
     <ClCompile Include="Dynamic_Creature_Jerry.cpp" />

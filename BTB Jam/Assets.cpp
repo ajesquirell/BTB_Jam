@@ -111,6 +111,28 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 	 load("Covid_Medium_13", "../Sprites/Covid_Medium/sprite_13.png");
 	 load("Covid_Medium_14", "../Sprites/Covid_Medium/sprite_14.png");
 
+	 load("Covid_Large_00", "../Sprites/Covid_Large/sprite_00.png");
+	 load("Covid_Large_01", "../Sprites/Covid_Large/sprite_01.png");
+	 load("Covid_Large_02", "../Sprites/Covid_Large/sprite_02.png");
+	 load("Covid_Large_03", "../Sprites/Covid_Large/sprite_03.png");
+	 load("Covid_Large_04", "../Sprites/Covid_Large/sprite_04.png");
+	 load("Covid_Large_05", "../Sprites/Covid_Large/sprite_05.png");
+	 load("Covid_Large_06", "../Sprites/Covid_Large/sprite_06.png");
+	 load("Covid_Large_07", "../Sprites/Covid_Large/sprite_07.png");
+	 load("Covid_Large_08", "../Sprites/Covid_Large/sprite_08.png");
+	 load("Covid_Large_09", "../Sprites/Covid_Large/sprite_09.png");
+	 load("Covid_Large_10", "../Sprites/Covid_Large/sprite_10.png");
+
+	 //Covid Projectile
+	 load("Covid_Projectile_00", "../Sprites/Covid_Projectile/sprite_0.png");
+	 load("Covid_Projectile_01", "../Sprites/Covid_Projectile/sprite_1.png");
+	 load("Covid_Projectile_02", "../Sprites/Covid_Projectile/sprite_2.png");
+	 load("Covid_Projectile_03", "../Sprites/Covid_Projectile/sprite_3.png");
+	 load("Covid_Projectile_04", "../Sprites/Covid_Projectile/sprite_4.png");
+	 load("Covid_Projectile_05", "../Sprites/Covid_Projectile/sprite_5.png");
+	 load("Covid_Projectile_06", "../Sprites/Covid_Projectile/sprite_6.png");
+	 load("Covid_Projectile_07", "../Sprites/Covid_Projectile/sprite_7.png");
+
 
 
 	 //Random
@@ -142,7 +164,7 @@ void Assets::LoadItems()
 	load(new cItem_FlamesCash, 3);
 	load(new cWeapon_Sword, 4);
 	load(new cWeapon_Pistol, 5);
-	load(new cWeapon_Covid_Medium, 6);
+	load(new cWeapon_Covid_Projectile, 6);
 
 }
 
@@ -160,5 +182,7 @@ void Assets::LoadSounds()
 	load("sndWuWuWu","../Sounds/WuWuWu.wav");
 	load("sndGetMoney","../Sounds/GetMoney.wav");
 	load("LitLoop", "../Sounds/LIIIIIIT.wav");
+	load("CleanSlate", "../Sounds/Clean_Slate_Final_Mastered_Edition.wav");
+
 }
 

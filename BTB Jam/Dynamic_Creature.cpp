@@ -10,7 +10,7 @@ cDynamic_Creature::cDynamic_Creature(std::string n) : cDynamic(n)
 	fStateTick = 2.0f;
 	bIsAttackable = true;
 
-	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Covid_Large_00"));
 
 	animations.ChangeState("idle");
 }
@@ -28,11 +28,11 @@ void cDynamic_Creature::DrawSelf(olc::PixelGameEngine* pge, float ox, float oy) 
 
 	if (fFaceDir == cDynamic_Creature::LEFT)
 	{
-		utility::DrawInvertedSprite(pge, (px - ox) * 22, (py - oy) * 22, animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
+		utility::DrawInvertedSprite(pge, ((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
 	}
 	else
 	{
-		pge->DrawSprite((px - ox) * 22, (py - oy) * 22, animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
+		pge->DrawSprite(((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
 	}
 
 }

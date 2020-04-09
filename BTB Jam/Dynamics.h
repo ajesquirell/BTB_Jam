@@ -43,6 +43,14 @@ public:
 
 	bool bObjectOnGround; //Probably only for Dynamic Creatures and Items
 
+	// Used for collision detection with sprites of varying sizes (other than the standard tile size of 22x22)
+	// Difference between the size of this object and the nearest multiple of tile size (22), which is remainder - Modulus operator
+	// i.e. if dimensions are 32x32, then dif is 10 (32 % 22 == 10), if dimensions are 68x68, result is 2 (68 % 22 = 2)
+	int GetDimensionDif() { return nDimensions % 22; }
+
+protected:
+	int nDimensions = 22; // Default dimensions match tile size
+
 public:
 	virtual void DrawSelf(olc::PixelGameEngine* pge, float ox, float oy) = 0; //Screen space offset, since we already have position as data member
 	virtual void Update(float fElapsedTime, cDynamic* player = nullptr) {}
@@ -142,6 +150,21 @@ class cDynamic_Creature_Covid_Medium : public cDynamic_Creature
 {
 public:
 	cDynamic_Creature_Covid_Medium();
+
+	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
+	void PerformAttack() override;
+	void UpdateAnimationState(float fElapsedTime) override;
+protected:
+	bool bAttackTick = true;
+};
+
+//================================================================================================
+//											Dynamic Creature - Covid Large
+//================================================================================================
+class cDynamic_Creature_Covid_Large : public cDynamic_Creature
+{
+public:
+	cDynamic_Creature_Covid_Large();
 
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;

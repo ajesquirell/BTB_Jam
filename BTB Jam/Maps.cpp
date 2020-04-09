@@ -173,7 +173,7 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 
 	for (int i = 0; i < 3; i++)
 	{
-		cDynamic* g = new cDynamic_Creature_Covid_Medium();
+		cDynamic* g = new cDynamic_Creature_Covid_Large();
 		vecDyns.push_back(g);
 		g->px = rand() % 10 + 5.0f;
 		g->py = 120.0f;
