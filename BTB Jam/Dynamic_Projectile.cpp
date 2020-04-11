@@ -21,14 +21,14 @@ cDynamic_Projectile::cDynamic_Projectile(float ox, float oy, bool bFriend, float
 
 void cDynamic_Projectile::DrawSelf(olc::PixelGameEngine* pge, float ox, float oy)
 {
-	if (fFaceDir == cDynamic_Creature::LEFT)
-	{
-		utility::DrawInvertedSprite(pge, (px - ox) * 22, (py - oy) * 22, animProjectile.mapStates[animProjectile.sCurrentState][animProjectile.nCurrentFrame]);
-	}
-	else
-	{
-		pge->DrawSprite((px - ox) * 22, (py - oy) * 22, animProjectile.mapStates[animProjectile.sCurrentState][animProjectile.nCurrentFrame]);
-	}
+		if (fFaceDir == cDynamic_Creature::LEFT)
+		{
+			utility::DrawInvertedSprite(pge, ((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animProjectile.mapStates[animProjectile.sCurrentState][animProjectile.nCurrentFrame]);
+		}
+		else
+		{
+			pge->DrawSprite(((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animProjectile.mapStates[animProjectile.sCurrentState][animProjectile.nCurrentFrame]);
+		}
 }
 
 void cDynamic_Projectile::Update(float fElapsedTime, cDynamic* player)

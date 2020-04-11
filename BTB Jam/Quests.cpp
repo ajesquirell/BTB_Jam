@@ -30,29 +30,28 @@ bool cQuest_MainQuest::PopulateDynamics(std::vector<cDynamic*>& vecDyns, std::st
 	{
 		if (nPhase == 0)
 		{
-			cDynamic_Creature* bob = new cDynamic_Creature("Bob");
+			/*cDynamic_Creature* bob = new cDynamic_Creature("Bob");
 			bob->px = 17.0f;
 			bob->py = 0.0f;
 			bob->fFaceDir = -1.0f;
-			vecDyns.push_back(bob);
+			vecDyns.push_back(bob);*/
 		}
-			cDynamic_Creature* nasser = new cDynamic_Creature("Nasser");
+			/*cDynamic_Creature* nasser = new cDynamic_Creature("Nasser");
 			nasser->px = 20.0f;
 			nasser->py = 0.0f;
 			nasser->fFaceDir = -1.0f;
-			nasser->bFriendly = false;
-			vecDyns.push_back(nasser);
+			vecDyns.push_back(nasser);*/
 	}
 
 	if (sMapName == "Level 2")
 	{
 		if (nPhase == 1)
 		{
-			cDynamic_Creature* bob = new cDynamic_Creature("Bob");
+			/*cDynamic_Creature* bob = new cDynamic_Creature("Bob");
 			bob->px = 5.0f;
 			bob->py = 0.0f;
 			bob->fFaceDir = -1.0f;
-			vecDyns.push_back(bob);
+			vecDyns.push_back(bob);*/
 		}	
 	}
 	

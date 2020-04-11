@@ -65,7 +65,7 @@ bool Platformer::OnUserDestroy()
 bool Platformer::OnUserUpdate(float fElapsedTime)
 {
 	//Check for game pause
-	if (GetKey(olc::Key::P).bPressed)
+	if (GetKey(olc::Key::ESCAPE).bPressed)
 	{
 		if (!bGamePaused) {
 			bGamePaused = true; /*Pause*/
@@ -205,7 +205,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 				m_pPlayer->bSquat = false; //Reset flag
 				if (GetKey(olc::Key::DOWN).bHeld)
 				{
-					m_pPlayer->vy = 6.0f;
+					//m_pPlayer->vy = 6.0f;
 					m_pPlayer->bSquat = true;
 				}
 
@@ -286,8 +286,8 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 					bool bInteraction = false;
 					for (auto dyns : vecDynamics)
 					{
-						if (fTestX > dyns->px&& fTestX < (dyns->px + 1.0f)
-							&& fTestY > dyns->py&& fTestY < (dyns->py + 1.0f))
+						if (fTestX > dyns->px && fTestX < (dyns->px + 1.0f)
+							&& fTestY > dyns->py && fTestY < (dyns->py + 1.0f))
 						{
 							if (dyns->bFriendly)
 							{
@@ -408,7 +408,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 				if (object->vx <= 0) //Player moving left
 				{
 					if (pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), object->py + 0.0f - (object->GetDimensionDif() / 22.0f))->solid || pCurrentMap->GetTile(fNewObjectPosX + 0.0f - (object->GetDimensionDif() / 22.0f), object->py + 0.9f)->solid)  //0.9f because we're not checking Y direction collision right here, and we don't want that to register a collsion, but we still have to check that bottom left corner of the player
-					{																																																																	//And the 0.9f allows player to fit in gaps that are only 1 unit across
+					{																																																												//And the 0.9f allows player to fit in gaps that are only 1 unit across
 						if (object->GetDimensionDif() == 0) // Standard size																																																			//Basically makes so truncation of tiles doesn't catch us.
 							fNewObjectPosX = (int)fNewObjectPosX + 1;		
 						else // Non-standard size object
@@ -511,21 +511,56 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 								fDynamicObjectPosX = dyn->px - 1.0f - (dyn->GetDimensionDif() / 22.0f);
 
 							object->vx = 0;
+
+							if (object == m_pPlayer) // If player runs in to enemy
+							{
+								dyn->OnInteract(object); // For touching enemies - OnInteract will hurt player
+								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;
+							}
+							if (dyn == m_pPlayer) // If enemy runs into player (there is a difference)
+							{
+								object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
+								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;
+							}
 						}
 
 						if (fDynamicObjectPosX  - (object->GetDimensionDif() / 22.0f) < (dyn->px + 1.0f) && (fDynamicObjectPosX + 1.0f) > dyn->px - (dyn->GetDimensionDif() / 22.0f)
 							&& fDynamicObjectPosY - (object->GetDimensionDif() / 22.0f) < (dyn->py + 1.0f) && (fDynamicObjectPosY + 1.0f) > dyn->py - (dyn->GetDimensionDif() / 22.0f))
 						{
+							bool bPlayerBounce = false;
+							bool bEnemyBounce = false;
 							//Then check vertically - Up first
 							if (object->vy <= 0)
 								fDynamicObjectPosY = dyn->py + 1.0f + (object->GetDimensionDif() / 22.0f);
 							else
 							{
 								fDynamicObjectPosY = dyn->py - 1.0f - (dyn->GetDimensionDif() / 22.0f);
+								if (object == m_pPlayer) { bPlayerBounce = true; } // If player lands on top of enemy
+								if (dyn == m_pPlayer) { bEnemyBounce = true; } // If enemy lands on top of player
 								object->bObjectOnGround = true;
 							}
 
-							object->vy = 0;
+							if (bPlayerBounce)
+								object->vy = -12.0f;
+							else if (bEnemyBounce)
+								object->vy = -4.0f;
+							else
+								object->vy = 0;
+
+							if (dyn == m_pPlayer && bEnemyBounce == true) // Only want player to be damaged if object lands on top of player. Player should bounce off enemy heads 
+							{
+								dyn->OnInteract(object); // For touching enemies - OnInteract will hurt player
+								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;
+							}
+							//if (dyn == m_pPlayer) // If enemy runs into player (there is a difference)
+							//{
+							//	object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
+							//	olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+							//	pCurrentMap->skyColor = p;
+							//}
 						}
 
 					}
@@ -541,14 +576,14 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 								{
 									// Check if interaction is map related
 									pCurrentMap->OnInteraction(vecDynamics, dyn, cMap::WALK);
-									//bInteraction = true; //Should we do this?
+									//bInteraction = true; //Do we need this?
 								}
 
 								if (!bInteraction)
 								{
 									//Finally just check the object - (for items, non-important characters, etc)
 									dyn->OnInteract(object);
-									//bInteraction = true; //Should we do this?
+									//bInteraction = true; //Do we need this?
 								}
 							}
 						}
@@ -690,7 +725,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	*/
 
 	DrawString(140, 1, "Javid vs. Covid", olc::Pixel(rand() % 255, rand() % 255, rand() % 255));
-	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: X, Inventory: Z\nPAUSE: P", olc::DARK_MAGENTA);
+	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: X, Inventory: Z\nPAUSE: Esc", olc::DARK_MAGENTA);
 
 	//Game end (for now of course)
 	if (m_pPlayer->nScore >= 370)
@@ -967,7 +1002,9 @@ void Platformer::Damage(cDynamic_Projectile* projectile, cDynamic_Creature* vict
 			// Other OnInteraction code above assumed object was friendly - This will allow interaction
 			// with enemy objects, if need be
 			// Most enemies will ignore this
-			victim->OnInteract(m_pPlayer);
+
+			//Not using this at the moment because we're using OnInteract to register when an enemy has been touched, and that it will trigger for player to be hurt
+			//victim->OnInteract(m_pPlayer);
 		}
 		else
 		{

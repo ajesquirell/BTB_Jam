@@ -10,9 +10,9 @@ cDynamic_Creature::cDynamic_Creature(std::string n) : cDynamic(n)
 	fStateTick = 2.0f;
 	bIsAttackable = true;
 
-	animations.mapStates["idle"].push_back(Assets::get().GetSprite("Covid_Large_00"));
-
-	animations.ChangeState("idle");
+	// Base/ Default art for creatures - This should be changed for each derived creature!
+	animations.mapStates["absent"].push_back(Assets::get().GetSprite("Absent"));
+	animations.ChangeState("absent");
 }
 
 void cDynamic_Creature::DrawSelf(olc::PixelGameEngine* pge, float ox, float oy) //Screen space offset, since we already have position as data member

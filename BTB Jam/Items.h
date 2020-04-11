@@ -91,6 +91,18 @@ public:
 };
 
 //================================================================================================
+//											"Weapon" - Covid Touch Damage Profile
+//================================================================================================
+class cWeapon_Covid_Touch : public cWeapon
+{
+public:
+	cWeapon_Covid_Touch();
+
+public:
+	bool OnUse(cDynamic* object) override;
+};
+
+//================================================================================================
 //											Weapon - Sword
 //================================================================================================
 
@@ -98,19 +110,6 @@ class cWeapon_Sword : public cWeapon
 {
 public:
 	cWeapon_Sword();
-
-public:
-	bool OnUse(cDynamic* object) override;
-};
-
-//================================================================================================
-//											Weapon - Pistol
-//================================================================================================
-
-class cWeapon_Pistol : public cWeapon
-{
-public:
-	cWeapon_Pistol();
 
 public:
 	bool OnUse(cDynamic* object) override;

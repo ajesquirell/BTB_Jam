@@ -64,10 +64,13 @@ public:
 			return new cWeapon_Sword;
 			break;
 		case 5:
-			return new cWeapon_Pistol;
+			
 			break;
 		case 6:
 			return new cWeapon_Covid_Projectile;
+			break;
+		case 7:
+			return new cWeapon_Covid_Touch;
 			break;
 		}
 	}

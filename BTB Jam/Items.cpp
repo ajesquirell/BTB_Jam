@@ -130,9 +130,9 @@ bool cItem_FlamesCash::OnUse(cDynamic* object)
 	return true;
 }
 
-//================================================================================================
+//==============================================================================================================
 //											Weapon - Base weapon class (Like reg item, just stores damage)
-//================================================================================================
+//==============================================================================================================
 cWeapon::cWeapon(string name, string desc, int dmg) : cItem(name, desc)
 {
 	nDamage = dmg;
@@ -206,7 +206,7 @@ bool cWeapon_Covid_Projectile::OnUse(cDynamic* object)
 
 	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, cDynamic_Creature::LEFT);
 	p->bSolidVsMap = true;
-	p->bSolidVsDynamic = false;
+	p->bSolidVsDynamic = false; //Needs to be false for projectile collision to execute
 	p->nDamage = this->nDamage; //5
 	p->bOneHit = true;
 	p->fKnockBackVel = 4.0f;
@@ -228,70 +228,50 @@ bool cWeapon_Covid_Projectile::OnUse(cDynamic* object)
 }
 
 //================================================================================================
-//											Weapon - Pistol
+//											"Weapon" - Covid Touch Damage Profile
 //================================================================================================
-cWeapon_Pistol::cWeapon_Pistol() :
-	cWeapon("Pistol", "A standard pistol. Don't worry, Jerry has is concealed carry permits. - 2 dmg", 2)
+cWeapon_Covid_Touch::cWeapon_Covid_Touch() :
+	cWeapon("Covid Touch", "Consequence for touching covid enemy - 1 dmg", 1)
 {
 	//Add sprites here!
 	// Weapon Model Sprites (Can make him hold weapon later)
-	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Squat"));
+	animItem.mapStates["default"].push_back(Assets::get().GetSprite("Blank22x22"));
+
+
 	animItem.ChangeState("default");
 
 	// Projectile Sprites
-	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	//animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Blank22x22"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Blank32x32"));
+
+
 	animProjectile.ChangeState("default");
 }
 
-bool cWeapon_Pistol::OnUse(cDynamic* object)
+bool cWeapon_Covid_Touch::OnUse(cDynamic* object)
 {
 	// When weapons are used, they are used on the object that owns the weapon, i.e.
 	// the attacker. However this does not imply the attacker attacks themselves
 
-	//Get direction of attacker
+	//Get attacker
 	cDynamic_Creature* aggressor = (cDynamic_Creature*)object;
 
-	// Determine attack origin
-	float x, y, vx, vy;
-	if (aggressor->fFaceDir == cDynamic_Creature::LEFT) //Don't really need this, because we have fFaceDir
-	{
-		x = aggressor->px - 1.0f; //Not 1.0f in order for vector calculations in JvC_Engine::Damage() to not be zero (sort of a hack)
-		y = aggressor->py;
-		vx = -1.0f; vy = 0.0f;
-	}
-
-	if (aggressor->fFaceDir == cDynamic_Creature::RIGHT)
-	{
-		x = aggressor->px + 1.0f;
-		y = aggressor->py;
-		vx = 1.0f; vy = 0.0f;
-	}
-
-	if (aggressor->nHealth == aggressor->nHealthMax)
-	{
-		// Beam Sword
-		cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, vx * 15.0f, vy * 15.0f, 1.0f, animProjectile, aggressor->fFaceDir);
-		p->bSolidVsMap = true;
-		p->bSolidVsDynamic = false;
-		p->nDamage = this->nDamage; //5
-		p->bOneHit = true;
-		p->fKnockBackVel = 4.0f;
-		p->fKnockBackDuration = 0.1f;
-
-		g_engine->AddProjectile(p);
-	}
-
-	cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
-	p->bSolidVsMap = false;
-	p->bSolidVsDynamic = false;
-	p->nDamage = this->nDamage; //5
+	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px, aggressor->py, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, cDynamic_Creature::LEFT);
+	p->bSolidVsMap = true;
+	p->bSolidVsDynamic = false; //Needs to be false for projectile collision to execute
+	p->nDamage = this->nDamage;
 	p->bOneHit = true;
-	p->fKnockBackVel = 7.0f;
+	p->fKnockBackVel = 4.0f;
+	p->fKnockBackDuration = 0.1f;
+	p->KnockBackMode = both_omnidirectional;
+	p->SetDimension(aggressor->GetDimension);
 
 	g_engine->AddProjectile(p);
 
+
 	return false;
 }
+
 
 //================================================================================================
 //											Weapon - Sword
@@ -333,8 +313,8 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 		vx = 1.0f; vy = 0.0f;
 	}
 
-	if (aggressor->nHealth == aggressor->nHealthMax)
-	{
+	//if (aggressor->nHealth == aggressor->nHealthMax)
+	//{
 		// Beam Sword
 		cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, vx * 15.0f, vy * 15.0f, 1.0f, animProjectile, aggressor->fFaceDir);
 		p->bSolidVsMap = true;
@@ -345,16 +325,16 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 		p->fKnockBackDuration = 0.1f;
 
 		g_engine->AddProjectile(p);
-	}
+	//}
 
-	cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
-	p->bSolidVsMap = false;
-	p->bSolidVsDynamic = false;
-	p->nDamage = this->nDamage; //5
-	p->bOneHit = true;
-	p->fKnockBackVel = 7.0f;
+	//cDynamic_Projectile* p = new cDynamic_Projectile(x, y, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, aggressor->fFaceDir);
+	//p->bSolidVsMap = false;
+	//p->bSolidVsDynamic = false;
+	//p->nDamage = this->nDamage; //5
+	//p->bOneHit = true;
+	//p->fKnockBackVel = 7.0f;
 
-	g_engine->AddProjectile(p);
+	//g_engine->AddProjectile(p);
 
 	return false;
 }

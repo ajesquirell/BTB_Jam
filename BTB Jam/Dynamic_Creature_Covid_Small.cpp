@@ -81,6 +81,13 @@ void cDynamic_Creature_Covid_Small::PerformAttack()
 	pEquipedWeapon->OnUse(this);
 }
 
+bool cDynamic_Creature_Covid_Small::OnInteract(cDynamic* player)
+{
+	PerformAttack();
+
+	return false;
+}
+
 void cDynamic_Creature_Covid_Small::UpdateAnimationState(float fElapsedTime)
 {
 	if (!bObjectOnGround)

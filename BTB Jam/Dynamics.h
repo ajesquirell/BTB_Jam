@@ -48,6 +48,8 @@ public:
 	// i.e. if dimensions are 32x32, then dif is 10 (32 % 22 == 10), if dimensions are 68x68, result is 2 (68 % 22 = 2) -- If dimensions are smaller than standard tile size, we just want the negative difference
 	int GetDimensionDif() { return nDimensions >= 22 ? nDimensions % 22 : nDimensions - 22; }
 
+	int GetDimension() { return nDimensions; }
+
 protected:
 	int nDimensions = 22; // Default dimensions match tile size
 
@@ -89,6 +91,7 @@ public:
 	virtual void UpdateAnimationState(float fElapsedTime); // Because each creature may have differing requirements for changing their state, if any
 
 	cWeapon* pEquipedWeapon = nullptr;
+	cWeapon* pTouchDamageWeapon = nullptr;
 
 protected:
 	cAnimator animations; ///Can private members be accessed by the eventual player and enemy classes by using methods of this class like ChagneState??
@@ -141,6 +144,7 @@ public:
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
 	void UpdateAnimationState(float fElapsedTime) override;
+	bool OnInteract(cDynamic* player = nullptr) override;
 };
 
 //================================================================================================
@@ -154,6 +158,7 @@ public:
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
 	void UpdateAnimationState(float fElapsedTime) override;
+	bool OnInteract(cDynamic* player = nullptr) override;
 protected:
 	bool bAttackTick = true;
 };
@@ -169,6 +174,7 @@ public:
 	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
 	void PerformAttack() override;
 	void UpdateAnimationState(float fElapsedTime) override;
+	bool OnInteract(cDynamic* player = nullptr) override;
 protected:
 	bool bAttackTick = true;
 };
@@ -216,6 +222,8 @@ public:
 	cDynamic_Projectile(float ox, float oy, bool bFriend, float velx, float vely, float duration, cAnimator animProj, float fFaceDir);
 	void DrawSelf(olc::PixelGameEngine* pge, float ox, float oy) override;
 	void Update(float fElapsedTime, cDynamic* player = nullptr) override;
+
+	void SetDimension(int dim) { nDimensions = dim; } //Projectiles should be the only dynamic whose instances can have varying dimenisons
 
 public:
 	cAnimator animProjectile;

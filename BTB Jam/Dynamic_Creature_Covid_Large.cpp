@@ -26,6 +26,7 @@ cDynamic_Creature_Covid_Large::cDynamic_Creature_Covid_Large() : cDynamic_Creatu
 	animations.ChangeState("default");
 
 	//pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Covid Ball");
+	pTouchDamageWeapon = (cWeapon*)Assets::get().GetItem("Covid Touch");
 }
 
 void cDynamic_Creature_Covid_Large::Behavior(float fElapsedTime, cDynamic* player)
@@ -79,6 +80,15 @@ void cDynamic_Creature_Covid_Large::PerformAttack()
 		return;
 
 	pEquipedWeapon->OnUse(this);
+}
+
+bool cDynamic_Creature_Covid_Large::OnInteract(cDynamic* player)
+{	
+	if (pTouchDamageWeapon != nullptr)
+		pTouchDamageWeapon->OnUse(this);
+
+	
+	return false;
 }
 
 void cDynamic_Creature_Covid_Large::UpdateAnimationState(float fElapsedTime)

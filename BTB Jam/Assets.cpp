@@ -38,26 +38,26 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 	load("Brick_Break_14", "../Sprites/Brick/Brick_Break_13.png");
 
 
-	//Jerry
-	load("Jerry_Idle", "../Sprites/Jerry_Idle.png");
+	//Javid
+	load("Jerry_Idle", "../Sprites/Javid/Javid_Idle.png");
 
-	load("Jerry_Run_1", "../Sprites/Jerry_Run_1.png");
-	load("Jerry_Run_2", "../Sprites/Jerry_Run_2.png");
-	load("Jerry_Run_3", "../Sprites/Jerry_Run_3.png");
-	load("Jerry_Run_4", "../Sprites/Jerry_Run_4.png");
+	load("Jerry_Run_1", "../Sprites/Javid/Javid_Run_0.png");
+	load("Jerry_Run_2", "../Sprites/Javid/Javid_Run_1.png");
+	load("Jerry_Run_3", "../Sprites/Javid/Javid_Run_2.png");
+	load("Jerry_Run_4", "../Sprites/Javid/Javid_Run_3.png");
 
-	load("Jerry_Brake_1", "../Sprites/Jerry_Brake_1.png");
-	load("Jerry_Brake_2", "../Sprites/Jerry_Brake_2.png");
-	load("Jerry_Brake_3", "../Sprites/Jerry_Brake_3.png");
-	load("Jerry_Brake_4", "../Sprites/Jerry_Brake_4.png");
-	load("Jerry_Brake_5", "../Sprites/Jerry_Brake_5.png");
+	load("Jerry_Brake_1", "../Sprites/Javid/Javid_Brake_0.png");
+	load("Jerry_Brake_2", "../Sprites/Javid/Javid_Brake_1.png");
+	load("Jerry_Brake_3", "../Sprites/Javid/Javid_Brake_2.png");
+	load("Jerry_Brake_4", "../Sprites/Javid/Javid_Brake_3.png");
+	load("Jerry_Brake_5", "../Sprites/Javid/Javid_Brake_4.png");
 
-	load("Jerry_Squat", "../Sprites/Jerry_Squat.png");
+	load("Jerry_Squat", "../Sprites/Javid/Javid_Squat.png");
 
-	load("Jerry_Jump_1", "../Sprites/Jerry_Jump_1.png");
-	load("Jerry_Jump_2", "../Sprites/Jerry_Jump_2.png");
+	load("Jerry_Jump_1", "../Sprites/Javid/Javid_Jump_0.png");
+	load("Jerry_Jump_2", "../Sprites/Javid/Javid_Jump_1.png");
 
-	load("Jerry_Fall", "../Sprites/Jerry_Fall.png");
+	load("Jerry_Fall", "../Sprites/Javid/Javid_Fall.png");
 
 	 //Money
 	 load("Money_00", "../Sprites/Money/Money_00.png");
@@ -139,6 +139,9 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 	 load("Hi_Mom", "../Sprites/Hi_Mom.png");
 	 load("Health", "../Sprites/Health.png");
 	 load("Health Boost", "../Sprites/Health_Boost.png");
+	 load("Absent", "../Sprites/Absent.png");
+	 load("Blank22x22", "../Sprites/Blank22x22.png");
+	 load("Blank32x32", "../Sprites/Absent32.png");
 }
 
 void Assets::LoadMaps()
@@ -163,8 +166,9 @@ void Assets::LoadItems()
 	load(new cItem_HealthBoost, 2);
 	load(new cItem_FlamesCash, 3);
 	load(new cWeapon_Sword, 4);
-	load(new cWeapon_Pistol, 5);
+	//load(new cWeapon_Pistol, 5);
 	load(new cWeapon_Covid_Projectile, 6);
+	load(new cWeapon_Covid_Touch, 7);
 
 }
 
