@@ -46,7 +46,7 @@ bool Platformer::OnUserCreate()
 	listQuests.push_front(new cQuest_MainQuest());
 
 	//Player init
-	m_pPlayer = new cDynamic_Creature_Jerry(); //For now sprites/ anims are hard coded to be Jerry
+	m_pPlayer = new cDynamic_Creature_Javid(); //For now sprites/ anims are hard coded to be Javid
 	GiveItem(m_pPlayer->pEquipedWeapon);
 
 	//Initial Map
@@ -96,6 +96,8 @@ bool Platformer::OnUserUpdate(float fElapsedTime)
 		return UpdateInventory(fElapsedTime);
 	//case MODE_SHOP:
 		//return UpdateShop(fElapsedTime);
+	case MODE_GAMEOVER:
+		return UpdateGameOver(fElapsedTime);
 	}
 
 	return true;
@@ -259,7 +261,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 					//CMD(MoveTo(m_pPlayer, 0, 9, 1.0f));
 					//CMD(MoveTo(vecDynamics[1], 1, 9, 2.0f));
 					//CMD(MoveTo(vecDynamics[2], 1, 9, 2.0f));
-					//CMD(ShowDialog({ "Oh silly Jerry" }));
+					//CMD(ShowDialog({ "Oh silly Javid" }));
 					//CMD(ShowDialog({ "I think OOP", "is really useful" }, olc::RED));
 					//CMD(MoveTo(m_pPlayer, 7, 9, 1.0f));
 					//CMD(ChangeMap("Level 2", 0.0f, 0.0f));
@@ -545,15 +547,16 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 							if (bPlayerBounce)
 								object->vy = -12.0f;
 							else if (bEnemyBounce)
-								object->vy = -4.0f;
+							{
+								object->vy = -6.0f;
+								object->vx = object->px >= dyn->px ? 4.0f : -4.0f;
+							}
 							else
 								object->vy = 0;
 
 							if (dyn == m_pPlayer && bEnemyBounce == true) // Only want player to be damaged if object lands on top of player. Player should bounce off enemy heads 
 							{
 								object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
-								/*olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
-								pCurrentMap->skyColor = p;*/
 							}
 						}
 
@@ -727,7 +730,11 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	DrawString(140, 1, "Javid vs. Covid", olc::Pixel(rand() % 255, rand() % 255, rand() % 255));
 	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: X, Inventory: Z\nPAUSE: Esc", olc::DARK_MAGENTA);
 
-	//Game end (for now of course)
+	//Game end
+	if (m_pPlayer->nHealth <= 0)
+	{
+		//nGameMode = MODE_GAMEOVER;
+	}
 
 
 	return true;
@@ -1011,4 +1018,10 @@ void Platformer::Damage(cDynamic_Projectile* projectile, cDynamic_Creature* vict
 		if (projectile->bOneHit)
 			projectile->bRedundant = true;
 	}
+}
+
+bool Platformer::UpdateGameOver(float fElapsedTime)
+{
+
+		return true;
 }

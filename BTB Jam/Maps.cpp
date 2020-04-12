@@ -193,7 +193,7 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 
 
 	/*cAnimator* a = new cAnimator;
-	a->mapStates["default"].push_back(Assets::get().GetSprite("Jerry_Idle"));
+	a->mapStates["default"].push_back(Assets::get().GetSprite("Javid_Idle"));
 	a->ChangeState("default");
 	cDynamic_Projectile* h = new cDynamic_Projectile(3.0f, 3.0f, false, 15.0f, 0.0f, 10.0f, 2.0f, *a, 2.0f);
 	h->bOneHit = true;

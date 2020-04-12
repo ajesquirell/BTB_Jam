@@ -145,7 +145,7 @@
     <ClCompile Include="Dynamic_Creature_Covid_Large.cpp" />
     <ClCompile Include="Dynamic_Creature_Covid_Medium.cpp" />
     <ClCompile Include="Dynamic_Creature_Covid_Small.cpp" />
-    <ClCompile Include="Dynamic_Creature_Jerry.cpp" />
+    <ClCompile Include="Dynamic_Creature_Javid.cpp" />
     <ClCompile Include="Dynamic_Item.cpp" />
     <ClCompile Include="Dynamic_Projectile.cpp" />
     <ClCompile Include="Dynamic_Teleport.cpp" />

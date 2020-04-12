@@ -6,10 +6,10 @@
 cDynamic_Creature_Covid_Large::cDynamic_Creature_Covid_Large() : cDynamic_Creature("Covid_Large")
 {
 	bFriendly = false;
-	nHealth = 8;
-	nHealthMax = 8;
+	nHealth = 4;
+	nHealthMax = 4;
 	fStateTick = 2.0f;
-	nDimensions = 32;
+	nDimensions = 40;
 
 	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Large_00"));
 	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Large_01"));
@@ -72,6 +72,8 @@ void cDynamic_Creature_Covid_Large::Behavior(float fElapsedTime, cDynamic* playe
 		vx = 0.0f;
 		bAttackTick = false;
 	}
+	else if (bObjectOnGround) // Prevents from attacking as soon as player is within range - must jump first
+		bAttackTick = false;
 }
 
 void cDynamic_Creature_Covid_Large::PerformAttack()
@@ -87,7 +89,6 @@ bool cDynamic_Creature_Covid_Large::OnInteract(cDynamic* player)
 	if (pTouchDamageWeapon != nullptr)
 		pTouchDamageWeapon->OnUse(this);
 
-	
 	return false;
 }
 

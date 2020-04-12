@@ -6,8 +6,8 @@
 cDynamic_Creature_Covid_Medium::cDynamic_Creature_Covid_Medium() : cDynamic_Creature("Covid_Medium")
 {
 	bFriendly = false;
-	nHealth = 8;
-	nHealthMax = 8;
+	nHealth = 3;
+	nHealthMax = 3;
 	fStateTick = 2.0f;
 
 	animations.mapStates["default"].push_back(Assets::get().GetSprite("Covid_Medium_00"));
@@ -29,6 +29,7 @@ cDynamic_Creature_Covid_Medium::cDynamic_Creature_Covid_Medium() : cDynamic_Crea
 	animations.ChangeState("default");
 
 	pEquipedWeapon = (cWeapon*)Assets::get().GetItem("Covid Ball");
+	pTouchDamageWeapon = (cWeapon*)Assets::get().GetItem("Covid Touch");
 }
 
 void cDynamic_Creature_Covid_Medium::Behavior(float fElapsedTime, cDynamic* player)
@@ -68,12 +69,14 @@ void cDynamic_Creature_Covid_Medium::Behavior(float fElapsedTime, cDynamic* play
 
 	//vx += fFaceDir * 1.0f * fElapsedTime;
 
-	if (bObjectOnGround && bAttackTick && fDistance < 5.0f)
+	if (bObjectOnGround && bAttackTick && fDistance < 4.0f)
 	{
 		PerformAttack();
 		vx = 0.0f;
 		bAttackTick = false;
 	}
+	else if (bObjectOnGround) // Prevents from attacking as soon as player is within range - must jump first
+		bAttackTick = false;
 }
 
 void cDynamic_Creature_Covid_Medium::PerformAttack()
@@ -86,7 +89,8 @@ void cDynamic_Creature_Covid_Medium::PerformAttack()
 
 bool cDynamic_Creature_Covid_Medium::OnInteract(cDynamic* player)
 {
-	PerformAttack();
+	if (pTouchDamageWeapon != nullptr)
+		pTouchDamageWeapon->OnUse(this);
 
 	return false;
 }

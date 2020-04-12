@@ -103,35 +103,22 @@ protected:
 	float fKnockBackVel = 0.0f; //Set by each weapon when spawning projectile
 	float fKnockBackXDir = 0.0f;
 	KnockBackMode KnockBackMode = both;
+
+	float fDamageBlinkTimer = 0.0f; // For showing that creature is hurt
 };
 
 //================================================================================================
-//											Dynamic Creature - Jerry (Player)
+//											Dynamic Creature - Javid (Player)
 //================================================================================================
-class cDynamic_Creature_Jerry : public cDynamic_Creature
+class cDynamic_Creature_Javid : public cDynamic_Creature
 {
 public:
-	cDynamic_Creature_Jerry();
+	cDynamic_Creature_Javid();
 
 	void PerformAttack() override;
 	void UpdateAnimationState(float fElapsedTime) override;
+	//void OnDead() override;
 	int nScore;
-};
-
-//================================================================================================
-//											Dynamic Creature - Fake Jerry
-//================================================================================================
-class cDynamic_Creature_FakeJerry : public cDynamic_Creature
-{
-public:
-	cDynamic_Creature_FakeJerry();
-
-	void Behavior(float fElapsedTime, cDynamic* player = nullptr) override;
-	void PerformAttack() override;
-	void UpdateAnimationState(float fElapsedTime) override;
-private:
-	//float fDirectionX;
-	//float fDirectionY;
 };
 
 //================================================================================================

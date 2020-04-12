@@ -61,7 +61,7 @@ public:
 			return new cItem_FlamesCash;
 			break;
 		case 4:
-			return new cWeapon_Sword;
+			return new cWeapon_Wipe;
 			break;
 		case 5:
 			

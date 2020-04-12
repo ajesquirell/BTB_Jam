@@ -37,6 +37,7 @@ public:
 			fTimeCounter = 0;
 			nCurrentFrame = 0;
 			bAnimateOnceState = false;
+			bCompletedAnimation = false;
 		}
 	}
 
@@ -52,6 +53,7 @@ public:
 			fTimeCounter = 0;
 			nCurrentFrame = 0;
 			bAnimateOnceState = b;
+			bCompletedAnimation = false;
 		}
 	}
 

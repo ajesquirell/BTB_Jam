@@ -27,9 +27,6 @@
     <ClCompile Include="Dynamic_Creature.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Dynamic_Creature_Jerry.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Dynamic_Item.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Dynamic_Creature_Covid_Large.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Dynamic_Creature_Javid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

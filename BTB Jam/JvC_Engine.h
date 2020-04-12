@@ -32,7 +32,7 @@ private:
 	cMap* pCurrentMap = nullptr;
 
 	//Player Properties
-	cDynamic_Creature_Jerry* m_pPlayer = nullptr;
+	cDynamic_Creature_Javid* m_pPlayer = nullptr;
 
 	vector<cDynamic*> vecDynamics; // Fixed - Changed depending on quest and maps
 	vector<cDynamic*> vecProjectiles; // Transient - Can be added and removed easily (only of type cDynamic b/c we want to also respond to physics engine like vecDynamics w/o duplicating code
@@ -52,7 +52,8 @@ private:
 		MODE_LOCAL_MAP,
 		MODE_WORLD_MAP,
 		MODE_INVENTORY,
-		MODE_SHOP
+		MODE_SHOP,
+		MODE_GAMEOVER
 	};
 
 	int nGameMode = MODE_TITLE;
@@ -120,6 +121,7 @@ public:
 	//bool UpdateWorldMap(float fElapsedTime);
 	bool UpdateInventory(float fElapsedTime);
 	//bool UpdateShop(float fElapsedTime);
+	bool UpdateGameOver(float fElapsedTime);
 
 	void ShowDialog(vector<string> vecLines, olc::Pixel color = olc::DARK_BLUE);
 	void DisplayDialog(vector<string> vecLines, int x, int y);

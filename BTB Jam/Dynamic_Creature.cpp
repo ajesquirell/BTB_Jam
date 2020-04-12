@@ -29,12 +29,46 @@ void cDynamic_Creature::DrawSelf(olc::PixelGameEngine* pge, float ox, float oy) 
 	if (fFaceDir == cDynamic_Creature::LEFT)
 	{
 		utility::DrawInvertedSprite(pge, ((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
+
+		if (fDamageBlinkTimer > 0.0f)
+		{
+			for (int32_t i = animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->width; i > 0; i--)
+				for (int32_t j = 0; j < animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->height; j++)
+				{
+					olc::Pixel p = animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->GetPixel(i, j);
+					p.r = 180;
+					p.g = 0;
+					p.b = 0;
+
+					pge->SetPixelMode(olc::Pixel::ALPHA);
+					pge->SetPixelBlend(0.6);
+					//pge->Draw(((px - ox) * 22) - GetDimensionDif() + i, ((py - oy) * 22) - GetDimensionDif() + j, p);
+					pge->Draw(GetDimension() - i, ((py - oy) * 22) - GetDimensionDif() + j, p);
+					pge->SetPixelMode(olc::Pixel::MASK);
+				}
+		}
 	}
 	else
 	{
 		pge->DrawSprite(((px - ox) * 22) - GetDimensionDif(), ((py - oy) * 22) - GetDimensionDif(), animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]);
-	}
 
+		if (fDamageBlinkTimer > 0.0f)
+		{
+			for (int32_t i = 0; i < animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->width; i++)
+				for (int32_t j = 0; j < animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->height; j++)
+				{
+					olc::Pixel p = animations.mapStates[animations.sCurrentState][animations.nCurrentFrame]->GetPixel(i, j);
+					p.r = 180;
+					p.g = 0;
+					p.b = 0;
+
+					pge->SetPixelMode(olc::Pixel::ALPHA);
+					pge->SetPixelBlend(0.6);
+					pge->Draw(((px - ox) * 22) - GetDimensionDif() + i, ((py - oy) * 22) - GetDimensionDif() + j, p);
+					pge->SetPixelMode(olc::Pixel::MASK);
+				}
+		}
+	}
 }
 
 void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
@@ -59,6 +93,7 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 		{
 			vy = fKnockBackDY * fKnockBackVel;
 		}
+
 		/*vx = fKnockBackDX * fKnockBackVel;
 		vy = fKnockBackDY * fKnockBackVel;*/
 
@@ -80,28 +115,22 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 			fFaceDir = (vx < 0 ? -1.0f : vx > 0 ? 1.0f : fFaceDir);
 
 
-		//Change animation speed based on object's vx -- Could put this in just the player class if we don't want all objects doing this
-		if (animations.sCurrentState == "run")
-			animations.fTimeBetweenFrames = 0.1f * (10.0f / fabs(vx));
-		else if (animations.sCurrentState == "brake")
-			animations.fTimeBetweenFrames = 0.05f;
-		else
-			animations.fTimeBetweenFrames = 0.1f;
-
 		animations.Update(fElapsedTime); //Update animation frame
 
-		//if (bControllable)
+		if (bControllable)
 			Behavior(fElapsedTime, player);
 	}
 
-	if (nHealth <= 0)
+	/*if (nHealth <= 0)
 	{
 		animations.ChangeState("dead");
 		bControllable = false;
 		bSolidVsDynamic = false;
 		bSolidVsMap = false;
 		OnDead();
-	}
+	}*/
+
+	fDamageBlinkTimer -= fElapsedTime;
 }
 
 void cDynamic_Creature::KnockBack(float dx, float dy, cDynamic_Projectile* proj)
@@ -115,6 +144,8 @@ void cDynamic_Creature::KnockBack(float dx, float dy, cDynamic_Projectile* proj)
 	bSolidVsDynamic = false;
 	bControllable = false;
 	bIsAttackable = false;
+
+	fDamageBlinkTimer = 0.4f;
 }
 
 void cDynamic_Creature::Behavior(float fElapsedTime, cDynamic* player)

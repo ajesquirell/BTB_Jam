@@ -6,8 +6,8 @@
 cDynamic_Creature_Covid_Small::cDynamic_Creature_Covid_Small() : cDynamic_Creature("Covid_Small")
 {
 	bFriendly = false;
-	nHealth = 5;
-	nHealthMax = 5;
+	nHealth = 2;
+	nHealthMax = 2;
 	fStateTick = 2.0f;
 	nDimensions = 10;
 
@@ -34,6 +34,8 @@ cDynamic_Creature_Covid_Small::cDynamic_Creature_Covid_Small() : cDynamic_Creatu
 
 
 	animations.ChangeState("default");
+
+	pTouchDamageWeapon = (cWeapon*)Assets::get().GetItem("Covid Touch");
 }
 
 void cDynamic_Creature_Covid_Small::Behavior(float fElapsedTime, cDynamic* player)
@@ -83,7 +85,8 @@ void cDynamic_Creature_Covid_Small::PerformAttack()
 
 bool cDynamic_Creature_Covid_Small::OnInteract(cDynamic* player)
 {
-	PerformAttack();
+	if (pTouchDamageWeapon != nullptr)
+		pTouchDamageWeapon->OnUse(this);
 
 	return false;
 }

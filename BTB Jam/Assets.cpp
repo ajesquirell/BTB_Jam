@@ -39,31 +39,31 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 
 
 	//Javid
-	load("Jerry_Idle", "../Sprites/Javid/Javid_Idle.png");
+	load("Javid_Idle", "../Sprites/Javid/Javid_Idle.png");
 
-	load("Jerry_Run_1", "../Sprites/Javid/Javid_Run_0.png");
-	load("Jerry_Run_2", "../Sprites/Javid/Javid_Run_1.png");
-	load("Jerry_Run_3", "../Sprites/Javid/Javid_Run_2.png");
-	load("Jerry_Run_4", "../Sprites/Javid/Javid_Run_3.png");
+	load("Javid_Run_1", "../Sprites/Javid/Javid_Run_0.png");
+	load("Javid_Run_2", "../Sprites/Javid/Javid_Run_1.png");
+	load("Javid_Run_3", "../Sprites/Javid/Javid_Run_2.png");
+	load("Javid_Run_4", "../Sprites/Javid/Javid_Run_3.png");
 
-	load("Jerry_Brake_1", "../Sprites/Javid/Javid_Brake_0.png");
-	load("Jerry_Brake_2", "../Sprites/Javid/Javid_Brake_1.png");
-	load("Jerry_Brake_3", "../Sprites/Javid/Javid_Brake_2.png");
-	load("Jerry_Brake_4", "../Sprites/Javid/Javid_Brake_3.png");
-	load("Jerry_Brake_5", "../Sprites/Javid/Javid_Brake_4.png");
+	load("Javid_Brake_1", "../Sprites/Javid/Javid_Brake_0.png");
+	load("Javid_Brake_2", "../Sprites/Javid/Javid_Brake_1.png");
+	load("Javid_Brake_3", "../Sprites/Javid/Javid_Brake_2.png");
+	load("Javid_Brake_4", "../Sprites/Javid/Javid_Brake_3.png");
+	load("Javid_Brake_5", "../Sprites/Javid/Javid_Brake_4.png");
 
-	load("Jerry_Squat", "../Sprites/Javid/Javid_Squat.png");
+	load("Javid_Squat", "../Sprites/Javid/Javid_Squat.png");
 
-	load("Jerry_Jump_1", "../Sprites/Javid/Javid_Jump_0.png");
-	load("Jerry_Jump_2", "../Sprites/Javid/Javid_Jump_1.png");
+	load("Javid_Jump_1", "../Sprites/Javid/Javid_Jump_0.png");
+	load("Javid_Jump_2", "../Sprites/Javid/Javid_Jump_1.png");
 
-	load("Jerry_Fall", "../Sprites/Javid/Javid_Fall.png");
+	load("Javid_Fall", "../Sprites/Javid/Javid_Fall.png");
 
-	load("Jerry_Shoot_0", "../Sprites/Javid/Javid_Shoot_0.png");
-	load("Jerry_Shoot_1", "../Sprites/Javid/Javid_Shoot_1.png");
-	load("Jerry_Shoot_2", "../Sprites/Javid/Javid_Shoot_2.png");
-	load("Jerry_Shoot_3", "../Sprites/Javid/Javid_Shoot_3.png");
-	load("Jerry_Shoot_4", "../Sprites/Javid/Javid_Shoot_4.png");
+	load("Javid_Wipe_0", "../Sprites/Javid/Javid_Wipe_0.png");
+	load("Javid_Wipe_1", "../Sprites/Javid/Javid_Wipe_1.png");
+	load("Javid_Wipe_2", "../Sprites/Javid/Javid_Wipe_2.png");
+	load("Javid_Wipe_3", "../Sprites/Javid/Javid_Wipe_3.png");
+	load("Javid_Wipe_4", "../Sprites/Javid/Javid_Wipe_4.png");
 
 
 
@@ -173,7 +173,7 @@ void Assets::LoadItems()
 	load(new cItem_Health, 1);
 	load(new cItem_HealthBoost, 2);
 	load(new cItem_FlamesCash, 3);
-	load(new cWeapon_Sword, 4);
+	load(new cWeapon_Wipe, 4);
 	//load(new cWeapon_Pistol, 5);
 	load(new cWeapon_Covid_Projectile, 6);
 	load(new cWeapon_Covid_Touch, 7);

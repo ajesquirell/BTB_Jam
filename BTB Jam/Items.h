@@ -103,13 +103,13 @@ public:
 };
 
 //================================================================================================
-//											Weapon - Sword
+//											Weapon - Wipe
 //================================================================================================
 
-class cWeapon_Sword : public cWeapon
+class cWeapon_Wipe : public cWeapon
 {
 public:
-	cWeapon_Sword();
+	cWeapon_Wipe();
 
 public:
 	bool OnUse(cDynamic* object) override;
