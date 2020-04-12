@@ -515,14 +515,14 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 							if (object == m_pPlayer) // If player runs in to enemy
 							{
 								dyn->OnInteract(object); // For touching enemies - OnInteract will hurt player
-								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
-								pCurrentMap->skyColor = p;
+								/*olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;*/
 							}
 							if (dyn == m_pPlayer) // If enemy runs into player (there is a difference)
 							{
 								object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
-								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
-								pCurrentMap->skyColor = p;
+								/*olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;*/
 							}
 						}
 
@@ -551,16 +551,10 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 
 							if (dyn == m_pPlayer && bEnemyBounce == true) // Only want player to be damaged if object lands on top of player. Player should bounce off enemy heads 
 							{
-								dyn->OnInteract(object); // For touching enemies - OnInteract will hurt player
-								olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
-								pCurrentMap->skyColor = p;
+								object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
+								/*olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
+								pCurrentMap->skyColor = p;*/
 							}
-							//if (dyn == m_pPlayer) // If enemy runs into player (there is a difference)
-							//{
-							//	object->OnInteract(dyn); // For touching enemies - OnInteract will hurt player
-							//	olc::Pixel p(rand() % 255 + 1, rand() % 255 + 1, rand() % 255 + 1);
-							//	pCurrentMap->skyColor = p;
-							//}
 						}
 
 					}
@@ -676,7 +670,13 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 		}
 	}
 
-
+	//Make sky darker as we climb higher
+	olc::Pixel p = pCurrentMap->skyColor;
+	p.r = ((pCurrentMap->nHeight - m_pPlayer->py) / pCurrentMap->nHeight) * 100;
+	p.g = (m_pPlayer->py / pCurrentMap->nHeight) * 255;
+	p.b = (m_pPlayer->py / pCurrentMap->nHeight) * 255;
+	p.a = 255;
+	pCurrentMap->skyColor = p;
 	
 
 	// Draw Object
@@ -690,7 +690,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	DrawSprite(0, 0, backBuff);
 
 	// Draw Score
-	sScoreString = "Hand Sanitizer: " + to_string(m_pPlayer->nScore);
+	sScoreString = "Toilet Paper: " + to_string(m_pPlayer->nScore);
 	DrawString(1, 1, sScoreString, olc::RED);
 
 	// Draw Health
@@ -728,14 +728,7 @@ bool Platformer::UpdateLocalMap(float fElapsedTime)
 	DrawString(0, ScreenHeight() - 25, "MOVE: <- ->, JUMP: Space\nInteract: X, Inventory: Z\nPAUSE: Esc", olc::DARK_MAGENTA);
 
 	//Game end (for now of course)
-	if (m_pPlayer->nScore >= 370)
-	{
-		//m_pPlayer->nScore = 0;
 
-		//LoadLevel(2);
-	}
-
-	//Play random Jerry Sounds????
 
 	return true;
 }

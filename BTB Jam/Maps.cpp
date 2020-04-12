@@ -109,6 +109,12 @@ bool cMap::Create(std::string fileName, std::string name)
 					vecPersistentCreatures.back()->px = x;
 					vecPersistentCreatures.back()->py = y;
 					break;
+				case 'L':
+					SetTile(x, y, new cTile_Sky(x, y));
+					vecPersistentCreatures.push_back(new cDynamic_Creature_Covid_Large);
+					vecPersistentCreatures.back()->px = x;
+					vecPersistentCreatures.back()->py = y;
+					break;
 				default:
 					tiles[y * nWidth + x] = new cTile_Invisible_Boundary(x, y);
 					break;
@@ -171,7 +177,7 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 	for (auto creature : vecPersistentCreatures)
 		vecDyns.push_back(creature);
 
-	for (int i = 0; i < 3; i++)
+	/*for (int i = 0; i < 3; i++)
 	{
 		cDynamic* g = new cDynamic_Creature_Covid_Large();
 		vecDyns.push_back(g);
@@ -182,7 +188,7 @@ bool cMap_Level1::PopulateDynamics(vector<cDynamic*>& vecDyns)
 		vecDyns.push_back(h);
 		h->px = rand() % 10 + 5.0f;
 		h->py = 125.0f;
-	}
+	}*/
 
 
 

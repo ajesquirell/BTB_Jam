@@ -80,11 +80,7 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 			fFaceDir = (vx < 0 ? -1.0f : vx > 0 ? 1.0f : fFaceDir);
 
 
-		/*if (nHealth <= 0)
-			animations.ChangeState("dead");*/
-
-
-			//Change animation speed based on object's vx -- Could put this in just the player class if we don't want all objects doing this
+		//Change animation speed based on object's vx -- Could put this in just the player class if we don't want all objects doing this
 		if (animations.sCurrentState == "run")
 			animations.fTimeBetweenFrames = 0.1f * (10.0f / fabs(vx));
 		else if (animations.sCurrentState == "brake")
@@ -94,7 +90,17 @@ void cDynamic_Creature::Update(float fElapsedTime, cDynamic* player)
 
 		animations.Update(fElapsedTime); //Update animation frame
 
-		Behavior(fElapsedTime, player);
+		//if (bControllable)
+			Behavior(fElapsedTime, player);
+	}
+
+	if (nHealth <= 0)
+	{
+		animations.ChangeState("dead");
+		bControllable = false;
+		bSolidVsDynamic = false;
+		bSolidVsMap = false;
+		OnDead();
 	}
 }
 

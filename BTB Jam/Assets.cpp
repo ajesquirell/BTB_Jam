@@ -59,6 +59,14 @@ void Assets::LoadSprites() //Single one time load of all sprite resources
 
 	load("Jerry_Fall", "../Sprites/Javid/Javid_Fall.png");
 
+	load("Jerry_Shoot_0", "../Sprites/Javid/Javid_Shoot_0.png");
+	load("Jerry_Shoot_1", "../Sprites/Javid/Javid_Shoot_1.png");
+	load("Jerry_Shoot_2", "../Sprites/Javid/Javid_Shoot_2.png");
+	load("Jerry_Shoot_3", "../Sprites/Javid/Javid_Shoot_3.png");
+	load("Jerry_Shoot_4", "../Sprites/Javid/Javid_Shoot_4.png");
+
+
+
 	 //Money
 	 load("Money_00", "../Sprites/Money/Money_00.png");
 	 load("Money_01", "../Sprites/Money/Money_01.png");

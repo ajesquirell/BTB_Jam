@@ -87,6 +87,7 @@ public:
 	virtual void Behavior(float fElapsedTime, cDynamic* player = nullptr);
 	virtual void PerformAttack() {};
 	void KnockBack(float dx, float dy, cDynamic_Projectile* proj);
+	virtual void OnDead() {};
 
 	virtual void UpdateAnimationState(float fElapsedTime); // Because each creature may have differing requirements for changing their state, if any
 

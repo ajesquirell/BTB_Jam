@@ -152,7 +152,7 @@ bool cWeapon::OnUse(cDynamic* object)
 //											Weapon - Covid Projectile
 //================================================================================================
 cWeapon_Covid_Projectile::cWeapon_Covid_Projectile() :
-	cWeapon("Covid Ball", "Deadly Covid Attack - 5 dmg", 5)
+	cWeapon("Covid Ball", "Deadly Covid Attack - 1 dmg", 1)
 {
 	//Add sprites here!
 	// Weapon Model Sprites (Can make him hold weapon later)
@@ -207,7 +207,7 @@ bool cWeapon_Covid_Projectile::OnUse(cDynamic* object)
 	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px - 1.0f, y, aggressor->bFriendly, -1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, cDynamic_Creature::LEFT);
 	p->bSolidVsMap = true;
 	p->bSolidVsDynamic = false; //Needs to be false for projectile collision to execute
-	p->nDamage = this->nDamage; //5
+	p->nDamage = this->nDamage;
 	p->bOneHit = true;
 	p->fKnockBackVel = 4.0f;
 	p->fKnockBackDuration = 0.1f;
@@ -215,7 +215,7 @@ bool cWeapon_Covid_Projectile::OnUse(cDynamic* object)
 	cDynamic_Projectile* p2 = new cDynamic_Projectile(aggressor->px + 1.0f, y, aggressor->bFriendly, 1.0f * 5.0f, vy * 5.0f, 1.0f, animProjectile, cDynamic_Creature::RIGHT);
 	p2->bSolidVsMap = true;
 	p2->bSolidVsDynamic = false;
-	p2->nDamage = this->nDamage; //5
+	p2->nDamage = this->nDamage;
 	p2->bOneHit = true;
 	p2->fKnockBackVel = 4.0f;
 	p2->fKnockBackDuration = 0.1f;
@@ -242,7 +242,7 @@ cWeapon_Covid_Touch::cWeapon_Covid_Touch() :
 
 	// Projectile Sprites
 	//animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Blank22x22"));
-	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Blank32x32"));
+	animProjectile.mapStates["default"].push_back(Assets::get().GetSprite("Blank22x22"));
 
 
 	animProjectile.ChangeState("default");
@@ -256,15 +256,15 @@ bool cWeapon_Covid_Touch::OnUse(cDynamic* object)
 	//Get attacker
 	cDynamic_Creature* aggressor = (cDynamic_Creature*)object;
 
-	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px, aggressor->py, aggressor->bFriendly, aggressor->vx, aggressor->vy, 0.1f, animProjectile, cDynamic_Creature::LEFT);
-	p->bSolidVsMap = true;
+	cDynamic_Projectile* p = new cDynamic_Projectile(aggressor->px + (1/22.0f) /*one pixel*/, aggressor->py + (1/22.0f), aggressor->bFriendly, aggressor->vx, 0.0f, 0.1f, animProjectile, cDynamic_Creature::LEFT);
+	p->bSolidVsMap = false;
 	p->bSolidVsDynamic = false; //Needs to be false for projectile collision to execute
 	p->nDamage = this->nDamage;
 	p->bOneHit = true;
 	p->fKnockBackVel = 4.0f;
 	p->fKnockBackDuration = 0.1f;
 	p->KnockBackMode = both_omnidirectional;
-	p->SetDimension(aggressor->GetDimension);
+	p->SetDimension(aggressor->GetDimension() + 2); // Encapsulate projectile around object, so it will hit whoever ran into it
 
 	g_engine->AddProjectile(p);
 
@@ -277,7 +277,7 @@ bool cWeapon_Covid_Touch::OnUse(cDynamic* object)
 //											Weapon - Sword
 //================================================================================================
 cWeapon_Sword::cWeapon_Sword() :
-	cWeapon("Basic Sword", "A wooden sword - 5 dmg", 5)
+	cWeapon("Basic Sword", "A wooden sword - 1 dmg", 1)
 {
 	//Add sprites here!
 	// Weapon Model Sprites (Can make him hold weapon later)
@@ -322,7 +322,7 @@ bool cWeapon_Sword::OnUse(cDynamic* object)
 		p->nDamage = this->nDamage; //5
 		p->bOneHit = true;
 		p->fKnockBackVel = 4.0f;
-		p->fKnockBackDuration = 0.1f;
+		p->fKnockBackDuration = 0.3f;
 
 		g_engine->AddProjectile(p);
 	//}
